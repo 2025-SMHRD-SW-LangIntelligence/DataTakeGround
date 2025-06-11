@@ -30,8 +30,13 @@ public class MemberController {
     	// 홈페이지
     	// 회원가입
     	
+<<<<<<< HEAD
 //      6월 11일 작업 1
 //      6월 11일 작업 2    
     	// 6 11 3
+=======
+    	// 3:58 test
+    	
+>>>>>>> refs/heads/sr
 	}
 }
