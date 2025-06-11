@@ -21,7 +21,7 @@ public class MemberController {
     	System.out.println("sr branch");
 		
     	// 홈페이지
-    	
+    	// 회원가입
     	
 	}
 }
