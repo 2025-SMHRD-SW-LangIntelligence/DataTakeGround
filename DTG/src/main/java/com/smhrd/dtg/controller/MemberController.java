@@ -19,9 +19,9 @@ public class MemberController {
 		System.out.println("jc branch");
     	System.out.println("yw brench");
     	System.out.println("sr branch");
-		// 테스트
-		// 테스트2
-    	//asdasd
-
+		
+    	// 홈페이지
+    	// 회원가입
+    	
 	}
 }
