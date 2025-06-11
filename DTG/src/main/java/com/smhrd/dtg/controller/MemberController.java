@@ -24,6 +24,7 @@ public class MemberController {
     	// 회원가입
     	
     	// 3:58 test
+    	// 4:05 test
     	
 	}
 }
