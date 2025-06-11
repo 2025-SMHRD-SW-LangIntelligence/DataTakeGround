@@ -19,8 +19,10 @@ public class MemberController {
 //		15번 줄	
 //		19번 줄 		
 		System.out.println("hs branch");
-    System.out.println("jc branch");
-    System.out.println("yw brench");
+		System.out.println("jc branch");
+		System.out.println("yw brench");
+		
+		// test
 
 
 	}
