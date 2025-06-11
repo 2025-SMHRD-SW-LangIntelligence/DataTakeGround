@@ -14,7 +14,7 @@ public class MemberController {
 
 		System.out.println("충돌 해결");
 
-		System.out.println("테스트 1");
+		System.out.println("테스트 branch");
 		System.out.println("hs branch");
 		System.out.println("jc branch");
     	System.out.println("yw brench");
