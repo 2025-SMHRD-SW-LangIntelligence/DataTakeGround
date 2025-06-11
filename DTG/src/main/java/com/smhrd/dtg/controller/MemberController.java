@@ -31,6 +31,6 @@ public class MemberController {
     	// 회원가입
     	
 //      6월 11일 작업 1
-
+//      6월 11일 작업 2       
 	}
 }
