@@ -16,6 +16,11 @@ public class MemberController {
 
 		System.out.println("yw brench");
 		System.out.println("테스트 branch");
+
+
+		
+
+		System.out.print("충돌 해결");
 		System.out.println("hs branch");
 		System.out.println("jc branch");
     	System.out.println("yw brench");
@@ -25,5 +30,7 @@ public class MemberController {
     	// 홈페이지
     	// 회원가입
     	
+//      6월 11일 작업 1
+
 	}
 }
