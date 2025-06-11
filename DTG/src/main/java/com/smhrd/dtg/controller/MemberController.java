@@ -22,6 +22,5 @@ public class MemberController {
 		// 테스트
 		// 테스트2
     	//asdasd
-
 	}
 }
