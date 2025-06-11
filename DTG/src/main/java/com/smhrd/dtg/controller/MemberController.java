@@ -15,6 +15,7 @@ public class MemberController {
 		System.out.println("테스트 1");
 		System.out.println("jc branch");
 		
-//		15번 줄		
+//		15번 줄	
+//		19번 줄 		
 	}
 }
