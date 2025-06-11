@@ -11,7 +11,8 @@ public class MemberController {
 		System.out.println("송주찬1ㅇㅇㅇㅇㅇㅇㅇㅇ");
 		System.out.println("송주찬1");
 		System.out.print("충돌 해결");
-		System.out.println("hs branch");
+		
+		System.out.println("sr branch");
 
 	}
 }
