@@ -23,5 +23,7 @@ public class MemberController {
     	// 홈페이지
     	// 회원가입
     	
+    	// 3:58 test
+    	
 	}
 }
