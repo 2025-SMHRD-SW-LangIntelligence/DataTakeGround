@@ -20,6 +20,6 @@ public class MemberController {
 		System.out.print("충돌 해결");
 		System.out.println("hs branch");
 //      6월 11일 작업 1
-
+//      6월 11일 작업 2       
 	}
 }
