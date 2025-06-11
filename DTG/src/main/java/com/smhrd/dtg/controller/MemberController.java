@@ -21,6 +21,7 @@ public class MemberController {
     	System.out.println("sr branch");
 
     	// 지도
+    	// 게시판
 
 	}
 }
