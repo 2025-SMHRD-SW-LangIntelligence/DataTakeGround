@@ -8,5 +8,6 @@ public class MemberController {
 		System.out.println("김현식");
 		System.out.println("최연우");
 		System.out.println("한승룡2");
+		System.out.println("송주찬1ㅇㅇㅇㅇ");
 	}
 }
