@@ -7,6 +7,7 @@ public class MemberController {
 		System.out.println("한승룡");
 		System.out.println("김현식");
 		System.out.println("최연우");
+
 		System.out.println("한승룡2");
 		System.out.println("송주찬1ㅇㅇㅇㅇ");
 		System.out.println("송주찬1");
@@ -15,6 +16,6 @@ public class MemberController {
 		System.out.println("테스트 1");
 		System.out.println("jc branch");
 		
-//		15번 줄		
+
 	}
 }
