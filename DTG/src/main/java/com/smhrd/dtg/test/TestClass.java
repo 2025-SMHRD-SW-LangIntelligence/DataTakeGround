@@ -20,13 +20,13 @@ public class TestClass implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         // ✅ 1. User 저장 테스트
-        User user = new User("홍길동");
+        User user = new User("김현식");
         testRepository.save(user);
-        System.out.println("✅ 저장 완료! User ID: " + user.getId());
+        System.out.println("저장 완료! User ID: " + user.getId());
 
         // ✅ 2. 전체 조회 테스트
         List<User> users = testRepository.findAll();
-        System.out.println("✅ 전체 사용자 목록:");
+        System.out.println("전체 사용자 목록:");
         for (User u : users) {
             System.out.println("ID: " + u.getId() + ", Name: " + u.getName());
         }
