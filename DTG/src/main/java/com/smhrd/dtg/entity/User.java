@@ -24,3 +24,4 @@ public class User {
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 }
+// 엔티티 커밋 푸시 확인
