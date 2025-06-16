@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="DTG/src/main/java"/>
+	<classpathentry kind="src" path="DTG/src/test/java"/>
+	<classpathentry excluding="com/smhrd/ta/test/" kind="src" path="TA/src/main/java"/>
+	<classpathentry kind="src" path="TA/src/main/java/com/smhrd/ta/test"/>
+	<classpathentry kind="src" path="TA/src/test/java"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
