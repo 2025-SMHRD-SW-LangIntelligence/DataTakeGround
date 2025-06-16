@@ -1,12 +1,10 @@
 <!DOCTYPE html>
-<html lang="ko">
-
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <title>우리 동네 지반침하 안전점수</title>
   <style>
-    html,
-    body {
+    html, body {
       height: 100%;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
@@ -14,10 +12,20 @@
       background-color: white;
     }
 
+    #wrap {
+      max-width: 600px;
+      height: 100%;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
     #header {
       display: flex;
       align-items: center;
+      justify-content: space-between;
       padding: 15px 20px;
+      position: relative;
     }
 
     .menu-icon {
@@ -25,6 +33,55 @@
       height: 20px;
       background-image: url('data:image/svg+xml;charset=UTF-8,<svg width="25" height="20" xmlns="http://www.w3.org/2000/svg"><rect width="25" height="3" y="0" fill="%23333"/><rect width="25" height="3" y="8" fill="%23333"/><rect width="25" height="3" y="16" fill="%23333"/></svg>');
       background-size: cover;
+      cursor: pointer;
+    }
+
+    #menuList {
+      position: absolute;
+      top: 60px;
+      left: 20px;
+      background-color: #f9f9f9;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 15px;
+      width: 200px;
+      display: none;
+      z-index: 999;
+    }
+
+    .login-message {
+      font-size: 14px;
+      color: #333;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    .login-btn {
+      display: block;
+      width: 100%;
+      padding: 8px;
+      background-color: #337DFF;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+
+    #menuList ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    #menuList ul li {
+      padding: 8px;
+      cursor: pointer;
+      border-bottom: 1px solid #eee;
+    }
+
+    #menuList ul li:hover {
+      background-color: #eee;
     }
 
     #container {
@@ -133,11 +190,26 @@
     }
   </style>
 </head>
-
 <body>
   <div id="wrap">
     <div id="header">
-      <div class="menu-icon"></div>
+      <div class="menu-icon" onclick="toggleMenu()"></div>
+      <div id="menuList">
+        <div class="login-message" th:if="${userName != null}">
+          <span th:text="${userName} + '님'"></span>
+        </div>
+        <div class="login-message" th:if="${userName == null}">
+          로그인이 필요합니다.
+        </div>
+
+        <button class="login-btn" th:if="${userName == null}" onclick="location.href='/login'">로그인</button>
+        <button class="login-btn" th:if="${userName != null}" onclick="location.href='/logout'">로그아웃</button>
+
+        <ul>
+          <li th:if="${userName != null}" onclick="alert('내 정보 보기')">내 정보</li>
+          <li th:if="${userName == null}" onclick="alert('로그인 후 이용 가능합니다')">내 정보</li>
+        </ul>
+      </div>
     </div>
 
     <div id="container">
@@ -159,22 +231,18 @@
           <div class="location">서울특별시 강남구</div>
           <div class="details">2025/06/13 15:32:53<br>강남구 ○○동 지반침하 발생</div>
         </div>
-
         <div class="entry">
           <div class="location">서울특별시 구로구</div>
           <div class="details">2025/06/11 11:24:34<br>구로구 ○○동 싱크홀 발생</div>
         </div>
-
         <div class="entry">
           <div class="location">전라남도 순천시</div>
           <div class="details">2025/06/07 17:12:25<br>순천시 ○○동 지반침하 발생</div>
         </div>
-
         <div class="entry">
           <div class="location">부산광역시 동래구</div>
           <div class="details">2025/05/29 14:32:13<br>동래구 ○○동 포트홀 발생</div>
         </div>
-
         <div class="entry">
           <div class="location">광주광역시 광산구</div>
           <div class="details">2025/05/25 13:29:30<br>광산구 ○○동 지반침하 발생</div>
@@ -182,6 +250,12 @@
       </div>
     </div>
   </div>
-</body>
 
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById("menuList");
+      menu.style.display = (menu.style.display === "block") ? "none" : "block";
+    }
+  </script>
+</body>
 </html>

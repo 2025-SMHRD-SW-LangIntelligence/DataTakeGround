@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>회원가입</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f6fa;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .join-container {
+      background-color: white;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #337DFF;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    .form-row {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .form-row button {
+      margin-left: 10px;
+      padding: 8px 12px;
+      font-size: 13px;
+      border: none;
+      background-color: #337DFF;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .form-row span {
+      margin-left: 10px;
+      font-size: 13px;
+    }
+
+    .match-msg {
+      font-size: 13px;
+    }
+
+    .match {
+      color: green;
+    }
+
+    .mismatch {
+      color: red;
+    }
+
+    button[type="submit"] {
+      width: 100%;
+      padding: 12px;
+      background-color: #337DFF;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 15px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #1d5fd9;
+    }
+  </style>
+</head>
+<body>
+
+<div class="join-container">
+  <h2>회원가입</h2>
+
+  <form action="/join" method="post" id="joinForm">
+
+    <label for="username">아이디</label>
+    <div class="form-row">
+      <input type="text" id="username" name="username" required>
+      <button type="button" onclick="checkUsername()">중복확인</button>
+    </div>
+    <span id="checkResult"></span>
+
+    <label for="password">비밀번호</label>
+    <input type="password" id="password" name="password" required>
+
+    <label for="confirmPassword">비밀번호 확인</label>
+    <input type="password" id="confirmPassword" required>
+    <span id="passwordMatchMsg" class="match-msg"></span>
+
+    <label for="name">이름</label>
+    <input type="text" id="name" name="name" required>
+
+    <button type="submit">가입하기</button>
+  </form>
+</div>
+
+<script>
+  function checkUsername() {
+    const username = $("#username").val();
+
+    if (!username) {
+      $("#checkResult").text("아이디를 입력하세요.").css("color", "red");
+      return;
+    }
+
+    $.ajax({
+      url: "/check-username",
+      method: "GET",
+      data: { username: username },
+      success: function(response) {
+        if (response === true) {
+          $("#checkResult").text("사용 가능한 아이디입니다.").css("color", "green");
+        } else {
+          $("#checkResult").text("이미 사용 중인 아이디입니다.").css("color", "red");
+        }
+      },
+      error: function() {
+        $("#checkResult").text("오류 발생").css("color", "red");
+      }
+    });
+  }
+
+  $(document).ready(function () {
+    $('#password, #confirmPassword').on('keyup', function () {
+      const pw = $('#password').val();
+      const confirmPw = $('#confirmPassword').val();
+
+      if (!confirmPw) {
+        $('#passwordMatchMsg').text('').removeClass('match mismatch');
+        return;
+      }
+
+      if (pw === confirmPw) {
+        $('#passwordMatchMsg')
+          .text('비밀번호 일치')
+          .removeClass('mismatch')
+          .addClass('match');
+      } else {
+        $('#passwordMatchMsg')
+          .text('비밀번호 불일치')
+          .removeClass('match')
+          .addClass('mismatch');
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
