@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
   <meta charset="UTF-8">
   <title>우리 동네 지반침하 안전점수</title>
   <style>
-    html,
-    body {
+    html, body {
       height: 100%;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
@@ -14,11 +12,21 @@
       background-color: white;
     }
 
+    #wrap {
+      max-width: 600px;
+      height: 100%;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
     #header {
       max-width: 600px;
       display: flex;
       align-items: center;
+      justify-content: space-between;
       padding: 15px 20px;
+      position: relative;
     }
 
     .menu-icon {
@@ -26,11 +34,59 @@
       height: 20px;
       background-image: url('data:image/svg+xml;charset=UTF-8,<svg width="25" height="20" xmlns="http://www.w3.org/2000/svg"><rect width="25" height="3" y="0" fill="%23333"/><rect width="25" height="3" y="8" fill="%23333"/><rect width="25" height="3" y="16" fill="%23333"/></svg>');
       background-size: cover;
+      cursor: pointer;
+    }
+
+    #menuList {
+      position: absolute;
+      top: 60px;
+      left: 20px;
+      background-color: #f9f9f9;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 15px;
+      width: 200px;
+      display: none;
+      z-index: 999;
+    }
+
+    .login-message {
+      font-size: 14px;
+      color: #333;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    .login-btn {
+      display: block;
+      width: 100%;
+      padding: 8px;
+      background-color: #337DFF;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+
+    #menuList ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    #menuList ul li {
+      padding: 8px;
+      cursor: pointer;
+      border-bottom: 1px solid #eee;
+    }
+
+    #menuList ul li:hover {
+      background-color: #eee;
     }
 
     #container {
       flex: 1;
-      /* 남은 공간 모두 차지 */
       padding: 20px;
       text-align: center;
       margin-top: 128px;
@@ -48,7 +104,7 @@
       display: flex;
       justify-content: center;
       margin-bottom: 40px;
-      height : 48px;
+      height: 48px;
     }
 
     .search-bar input {
@@ -64,7 +120,6 @@
     .btn_search {
       position: absolute;
       right: calc(50% - 240px + 0px);
-      /* align to input box */
       top: 50%;
       transform: translateY(-50%);
       width: 22px;
@@ -73,7 +128,8 @@
       background-color: white;
       border: 0;
     }
-    .search-bar img{
+
+    .search-bar img {
       transform: translateY(-10%);
       width: 25px;
       height: 25px;
@@ -113,21 +169,21 @@
       font-size: 13px;
       color: #333;
     }
-
-    #wrap {
-      max-width: 600px;
-      height: 100%;
-      margin: auto;
-      display: flex;
-      flex-direction: column;
-    }
   </style>
 </head>
-
 <body>
   <div id="wrap">
     <div id="header">
-      <div class="menu-icon"></div>
+      <div class="menu-icon" onclick="toggleMenu()"></div>
+      <div id="menuList">
+        <div class="login-message">로그인이 필요합니다.</div>
+        <button class="login-btn" onclick="location.href='/login'">로그인</button>
+        <ul>
+          <li onclick="location.href='/join'">회원가입</li>
+          <li onclick="alert('내 정보 보기 (로그인 필요)')">내 정보</li>
+          <li onclick="alert('로그아웃 (로그인 필요)')">로그아웃</li>
+        </ul>
+      </div>
     </div>
 
     <div id="container">
@@ -170,6 +226,12 @@
       </div>
     </div>
   </div>
-</body>
 
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById("menuList");
+      menu.style.display = (menu.style.display === "block") ? "none" : "block";
+    }
+  </script>
+</body>
 </html>
