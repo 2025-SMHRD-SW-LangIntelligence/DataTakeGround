@@ -2,182 +2,216 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<meta charset="UTF-8" />
-	<title>우리 동네 지반침하 안전점수</title>
-	<script type="text/javascript"
-		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cd3f88c99b509eab24270116d671ff65&libraries=services"></script>
-	<style>
-		html,
-		body {
-			height: 100%;
-			margin: 0;
-			padding: 0;
-			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-			background-color: white;
-		}
+<meta charset="UTF-8" />
+<title>우리 동네 지반침하 안전점수</title>
+<script type="text/javascript"
+	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cd3f88c99b509eab24270116d671ff65&libraries=services"></script>
+<style>
+html, body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	background-color: white;
+}
 
-		#wrap {
-			max-width: 1200px;
-			margin: auto;
-			height: 100%;
-			display: flex;
-			flex-direction: column;
-		}
+#wrap {
+	max-width: 1200px;
+	margin: auto;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
 
-		#header {
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-			padding: 15px 20px;
-			position: relative;
-			justify-content: space-between;
-			padding: 15px 20px;
-		}
+#header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 15px 20px;
+	position: relative;
+	justify-content: space-between;
+	padding: 15px 20px;
+}
 
-		.menu-icon {
-			width: 25px;
-			height: 20px;
-			background-image:
-				url('data:image/svg+xml;charset=UTF-8,<svg width="25" height="20" xmlns="http://www.w3.org/2000/svg"><rect width="25" height="3" y="0" fill="%23333"/><rect width="25" height="3" y="8" fill="%23333"/><rect width="25" height="3" y="16" fill="%23333"/></svg>');
-			background-size: cover;
-		}
+.menu-icon {
+	width: 25px;
+	height: 20px;
+	background-image:
+		url('data:image/svg+xml;charset=UTF-8,<svg width="25" height="20" xmlns="http://www.w3.org/2000/svg"><rect width="25" height="3" y="0" fill="%23333"/><rect width="25" height="3" y="8" fill="%23333"/><rect width="25" height="3" y="16" fill="%23333"/></svg>');
+	background-size: cover;
+}
 
-		#container {
-			flex: 1;
-			position: relative;
-		}
+#container {
+	flex: 1;
+	position: relative;
+}
 
-		#map {
-			width: 100%;
-			height: 100%;
-		}
+#map {
+	width: 100%;
+	height: 100%;
+}
 
-		.search-bar {
-			position: absolute;
-			top: 20px;
-			left: 50%;
-			transform: translateX(-50%);
-			align-items: center;
-			background: white;
-			padding: 0px 15px;
-			box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-			border: 2px solid #337DFF;
-			border-radius: 18px;
-			z-index: 10;
-			height: 44px;
-			display: flex;
-			justify-content: center;
-			width: 750px;
-		}
+.search-bar {
+	position: absolute;
+	top: 20px;
+	left: 50%;
+	transform: translateX(-50%);
+	align-items: center;
+	background: white;
+	padding: 0px 15px;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+	border: 2px solid #337DFF;
+	border-radius: 18px;
+	z-index: 10;
+	height: 44px;
+	display: flex;
+	justify-content: center;
+	width: 750px;
+}
 
-		.search-bar input {
-			width: 100%;
-			padding: 10px 12px;
-			border: none;
-			font-size: 14px;
-			outline: none;
-		}
+.search-bar input {
+	width: 100%;
+	padding: 10px 12px;
+	border: none;
+	font-size: 14px;
+	outline: none;
+}
 
-		.btn_search {
-			background: none;
-			border: none;
-			margin-left: 10px;
-			cursor: pointer;
-		}
+.btn_search {
+	background: none;
+	border: none;
+	margin-left: 10px;
+	cursor: pointer;
+}
 
-		.btn_search:hover {
-			opacity: 0.8;
-		}
+.btn_search:hover {
+	opacity: 0.8;
+}
 
-		.btn_search img {
-			width: 25px;
-			height: 25px;
-		}
+.btn_search img {
+	width: 25px;
+	height: 25px;
+}
 
-		#result-list {
-			position: absolute;
-			top: 66px;
-			left: 50%;
-			transform: translateX(-50%);
-			width: 100%;
-			max-width: 750px;
-			overflow-y: auto;
-			background: white;
-			border: 2px solid #337DFF;
-			border-radius: 0px 0px 18px 18px;
-			box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-			z-index: 15;
-			padding: 0px 15px;
-			display: none;
-		}
+#result-list {
+	position: absolute;
+	top: 66px;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 100%;
+	max-width: 750px;
+	overflow-y: auto;
+	background: white;
+	border: 2px solid #337DFF;
+	border-radius: 0px 0px 18px 18px;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+	z-index: 15;
+	padding: 0px 15px;
+	display: none;
+}
 
-		#result-list div {
-			padding: 10px;
-			border-bottom: 1px solid #eee;
-			cursor: pointer;
-		}
+#result-list div {
+	padding: 10px;
+	border-bottom: 1px solid #eee;
+	cursor: pointer;
+}
 
-		#result-list div:hover {
-			background-color: #f0f0f0;
-		}
+#result-list div:hover {
+	background-color: #f0f0f0;
+}
 
-		.menu-icon {
-			width: 25px;
-			height: 20px;
-			background-image:
-				url('data:image/svg+xml;charset=UTF-8,<svg width="25" height="20" xmlns="http://www.w3.org/2000/svg"><rect width="25" height="3" y="0" fill="%23333"/><rect width="25" height="3" y="8" fill="%23333"/><rect width="25" height="3" y="16" fill="%23333"/></svg>');
-			background-size: cover;
-			cursor: pointer;
-		}
+.menu-icon {
+	width: 25px;
+	height: 20px;
+	background-image:
+		url('data:image/svg+xml;charset=UTF-8,<svg width="25" height="20" xmlns="http://www.w3.org/2000/svg"><rect width="25" height="3" y="0" fill="%23333"/><rect width="25" height="3" y="8" fill="%23333"/><rect width="25" height="3" y="16" fill="%23333"/></svg>');
+	background-size: cover;
+	cursor: pointer;
+}
 
-		#menuList {
-			position: absolute;
-			top: 60px;
-			left: 20px;
-			background-color: #f9f9f9;
-			border: 1px solid #ccc;
-			border-radius: 10px;
-			padding: 15px;
-			width: 200px;
-			display: none;
-			z-index: 999;
-		}
+#menuList {
+	position: absolute;
+	top: 60px;
+	left: 20px;
+	background-color: #f9f9f9;
+	border: 1px solid #ccc;
+	border-radius: 10px;
+	padding: 15px;
+	width: 200px;
+	display: none;
+	z-index: 999;
+}
 
-		.login-message {
-			font-size: 14px;
-			color: #333;
-			margin-bottom: 10px;
-			font-weight: bold;
-		}
+.login-message {
+	font-size: 14px;
+	color: #333;
+	margin-bottom: 10px;
+	font-weight: bold;
+}
 
-		.login-btn {
-			display: block;
-			width: 100%;
-			padding: 8px;
-			background-color: #337DFF;
-			color: white;
-			border: none;
-			border-radius: 6px;
-			cursor: pointer;
-			margin-bottom: 10px;
-		}
+.login-btn {
+	display: block;
+	width: 100%;
+	padding: 8px;
+	background-color: #337DFF;
+	color: white;
+	border: none;
+	border-radius: 6px;
+	cursor: pointer;
+	margin-bottom: 10px;
+}
 
-		#menuList ul {
-			list-style: none;
-			padding: 0;
-			margin: 0;
-		}
+#menuList ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
 
-		#menuList ul li {
-			padding: 8px;
-			cursor: pointer;
-			border-bottom: 1px solid #eee;
-		}
+#menuList ul li {
+	padding: 8px;
+	cursor: pointer;
+	border-bottom: 1px solid #eee;
+}
 
-		#menuList ul li:hover {
-			background-color: #eee;
-		}
-	</style>
+#menuList ul li:hover {
+	background-color: #eee;
+}
+
+.custom_zoomcontrol {
+	position: absolute;
+	top: 50px;
+	right: 10px;
+	width: 36px;
+	height: 80px;
+	overflow: hidden;
+	z-index: 1;
+	background-color: #f5f5f5;
+}
+
+.custom_zoomcontrol span {
+	display: block;
+	width: 36px;
+	height: 40px;
+	text-align: center;
+	cursor: pointer;
+}
+
+.custom_zoomcontrol span img {
+	width: 15px;
+	height: 15px;
+	padding: 12px 0;
+	border: none;
+}
+
+.custom_zoomcontrol span:first-child {
+	border-bottom: 1px solid #bfbfbf;
+}
+
+.radius_border {
+	border: 1px solid #919191;
+	border-radius: 5px;
+}
+</style>
 </head>
 
 <body>
@@ -191,8 +225,10 @@
 				<div class="login-message" th:if="${userName == null}">로그인이
 					필요합니다.</div>
 
-				<button class="login-btn" th:if="${userName == null}" onclick="location.href='/login'">로그인</button>
-				<button class="login-btn" th:if="${userName != null}" onclick="location.href='/logout'">로그아웃</button>
+				<button class="login-btn" th:if="${userName == null}"
+					onclick="location.href='/login'">로그인</button>
+				<button class="login-btn" th:if="${userName != null}"
+					onclick="location.href='/logout'">로그아웃</button>
 
 				<ul>
 					<li th:if="${userName != null}" onclick="alert('내 정보 보기')">내
@@ -204,8 +240,6 @@
 		</div>
 
 		<div id="container">
-
-
 			<div id="map">
 				<div class="search-bar">
 					<input type="text" placeholder="주소를 입력해주세요">
@@ -214,6 +248,13 @@
 					</button>
 				</div>
 				<div id="result-list"></div>
+			</div>
+			<div class="custom_zoomcontrol radius_border">
+				<span onclick="zoomIn()"> <img
+					src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_plus.png"
+					alt="확대"></span> <span onclick="zoomOut()"><img
+					src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_minus.png"
+					alt="축소"></span>
 			</div>
 
 		</div>
@@ -315,6 +356,16 @@
 				resultList.style.display = 'none';
 			}
 		});
+		
+		// 지도 확대, 축소 컨트롤에서 확대 버튼을 누르면 호출되어 지도를 확대하는 함수입니다
+		function zoomIn() {
+		    map.setLevel(map.getLevel() - 1);
+		}
+
+		// 지도 확대, 축소 컨트롤에서 축소 버튼을 누르면 호출되어 지도를 확대하는 함수입니다
+		function zoomOut() {
+		    map.setLevel(map.getLevel() + 1);
+		}
 
 	</script>
 </body>
