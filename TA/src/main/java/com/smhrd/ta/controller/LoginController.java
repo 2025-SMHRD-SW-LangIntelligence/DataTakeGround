@@ -57,11 +57,11 @@ public class LoginController {
         if (loginUser != null) {
             model.addAttribute("userName", loginUser.getName());
         }
-        return "main";
+        return "index";
     }
     
-    @GetMapping("/main")
+    @GetMapping("/index")
     public String main_page() {
-    	return "main";
+    	return "index";
     }
 }
