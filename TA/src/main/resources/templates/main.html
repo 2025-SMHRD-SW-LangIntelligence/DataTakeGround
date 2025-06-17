@@ -2,145 +2,151 @@
 <html lang="ko">
 
 <head>
-    <meta charset="UTF-8" />
-    <title>우리 동네 지반침하 안전점수</title>
-    <script type="text/javascript"
-        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cd3f88c99b509eab24270116d671ff65&libraries=services"></script>
-    <style>
-        html,
-        body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: white;
-        }
+<meta charset="UTF-8" />
+<title>우리 동네 지반침하 안전점수</title>
+<script type="text/javascript"
+	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cd3f88c99b509eab24270116d671ff65&libraries=services"></script>
+<style>
+html, body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	background-color: white;
+}
 
-        #wrap {
-            max-width: 1200px;
-            margin: auto;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
+#wrap {
+	max-width: 1200px;
+	margin: auto;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
 
-        #header {
-            display: flex;
-            align-items: center;
-            padding: 15px 20px;
-        }
+#header {
+	display: flex;
+	align-items: center;
+	padding: 15px 20px;
+}
 
-        .menu-icon {
-            width: 25px;
-            height: 20px;
-            background-image: url('data:image/svg+xml;charset=UTF-8,<svg width="25" height="20" xmlns="http://www.w3.org/2000/svg"><rect width="25" height="3" y="0" fill="%23333"/><rect width="25" height="3" y="8" fill="%23333"/><rect width="25" height="3" y="16" fill="%23333"/></svg>');
-            background-size: cover;
-        }
+.menu-icon {
+	width: 25px;
+	height: 20px;
+	background-image:
+		url('data:image/svg+xml;charset=UTF-8,<svg width="25" height="20" xmlns="http://www.w3.org/2000/svg"><rect width="25" height="3" y="0" fill="%23333"/><rect width="25" height="3" y="8" fill="%23333"/><rect width="25" height="3" y="16" fill="%23333"/></svg>');
+	background-size: cover;
+}
 
-        #container {
-            flex: 1;
-            position: relative;
-        }
+#container {
+	flex: 1;
+	position: relative;
+}
 
-        #map {
-            width: 100%;
-            height: 100%;
-        }
+#map {
+	width: 100%;
+	height: 100%;
+}
 
-        .search-bar {
-            position: absolute;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            align-items: center;
-            background: white;
-            padding: 0px 15px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-            border: 2px solid #337DFF;
-            border-radius: 18px;
-            z-index: 10;
-            height: 44px;
-            display: flex;
-            justify-content: center;
-            width : 750px;
-        }
+.search-bar {
+	position: absolute;
+	top: 20px;
+	left: 50%;
+	transform: translateX(-50%);
+	align-items: center;
+	background: white;
+	padding: 0px 15px;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+	border: 2px solid #337DFF;
+	border-radius: 18px;
+	z-index: 10;
+	height: 44px;
+	display: flex;
+	justify-content: center;
+	width: 750px;
+}
 
-        .search-bar input {
-            width: 100%;
-            padding: 10px 12px;
-            border: none;
-            font-size: 14px;
-            outline: none;
-        }
+.search-bar input {
+	width: 100%;
+	padding: 10px 12px;
+	border: none;
+	font-size: 14px;
+	outline: none;
+}
 
-        .btn_search {
-            background: none;
-            border: none;
-            margin-left: 10px;
-            cursor: pointer;
-        }
+.btn_search {
+	background: none;
+	border: none;
+	margin-left: 10px;
+	cursor: pointer;
+}
 
-        .btn_search:hover {
-            opacity: 0.8;
-        }
+.btn_search:hover {
+	opacity: 0.8;
+}
 
-        .btn_search img {
-            width: 25px;
-            height: 25px;
-        }
+.btn_search img {
+	width: 25px;
+	height: 25px;
+}
 
-        #result-list {
-            position: absolute;
-            top: 66px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            max-width: 750px;
-            overflow-y: auto;
-            background: white;
-            border: 2px solid #337DFF;
-            border-radius: 0px 0px 18px 18px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-            z-index: 15;
-            padding: 0px 15px;
-            display: none;
-        }
+#result-list {
+	position: absolute;
+	top: 66px;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 100%;
+	max-width: 750px;
+	overflow-y: auto;
+	background: white;
+	border: 2px solid #337DFF;
+	border-radius: 0px 0px 18px 18px;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+	z-index: 15;
+	padding: 0px 15px;
+	display: none;
+}
 
-        #result-list div {
-            padding: 10px;
-            border-bottom: 1px solid #eee;
-            cursor: pointer;
-        }
+#result-list div {
+	padding: 10px;
+	border-bottom: 1px solid #eee;
+	cursor: pointer;
+}
 
-        #result-list div:hover {
-            background-color: #f0f0f0;
-        }
-    </style>
+#result-list div:hover {
+	background-color: #f0f0f0;
+}
+</style>
 </head>
 
 <body>
-    <div id="wrap">
-        <div id="header">
-            <div class="menu-icon"></div>
-        </div>
 
-        <div id="container">
+	<div id="wrap">
+		<div id="header">
+  <div class="menu-icon"></div>
+  <div style="margin-left: 10px; font-size: 18px; font-weight: bold; color: #337DFF;">
+    <img src="/img/imag1.png" alt="로고" style="height: 24px; margin-right: 8px;">
+    <span style="font-weight: bold; font-size: 20px;">씽크올</span>
+  </div>
+</div>
 
 
-            <div id="map">
-                <div class="search-bar">
-                    <input type="text" placeholder="주소를 입력해주세요">
-                    <button type="submit" class="btn_search">
-                        <img src="/img/search_btn.png" alt="검색 버튼">
-                    </button>
-                </div>
-                <div id="result-list"></div>
-            </div>
+		<div id="container">
 
-        </div>
-    </div>
 
-    <script>
+			<div id="map">
+				<div class="search-bar">
+					<input type="text" placeholder="주소를 입력해주세요">
+					<button type="submit" class="btn_search">
+						<img src="/img/search_btn.png" alt="검색 버튼">
+					</button>
+				</div>
+				<div id="result-list"></div>
+			</div>
+
+		</div>
+	</div>
+
+	<script>
         const container = document.getElementById('map');
         const mapOptions = {
             center: new kakao.maps.LatLng(37.5665, 126.9780),
