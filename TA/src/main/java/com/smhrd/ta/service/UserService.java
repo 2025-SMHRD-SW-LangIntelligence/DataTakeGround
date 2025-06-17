@@ -16,7 +16,7 @@ public class UserService {
     }
 
     public void registerUser(User user) {
-        // 비밀번호 암호화는 꼭 추가하세요!
+        // 비밀번호 암호화 추가
         userRepository.save(user);
     }
 
