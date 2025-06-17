@@ -60,13 +60,8 @@ public class LoginController {
         return "main";
     }
     
-<<<<<<< HEAD
     @GetMapping("/main")
     public String main_page() {
     	return "main";
     }
-=======
-    
-    
->>>>>>> branch 'master' of https://github.com/2025-SMHRD-SW-LangIntelligence/DataTakeGround.git
 }
