@@ -2,180 +2,182 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<meta charset="UTF-8" />
-<title>우리 동네 지반침하 안전점수</title>
-<script type="text/javascript"
-	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cd3f88c99b509eab24270116d671ff65&libraries=services"></script>
-<style>
-html, body {
-	height: 100%;
-	margin: 0;
-	padding: 0;
-	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-	background-color: white;
-}
+	<meta charset="UTF-8" />
+	<title>우리 동네 지반침하 안전점수</title>
+	<script type="text/javascript"
+		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cd3f88c99b509eab24270116d671ff65&libraries=services"></script>
+	<style>
+		html,
+		body {
+			height: 100%;
+			margin: 0;
+			padding: 0;
+			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+			background-color: white;
+		}
 
-#wrap {
-	max-width: 1200px;
-	margin: auto;
-	height: 100%;
-	display: flex;
-	flex-direction: column;
-}
+		#wrap {
+			max-width: 1200px;
+			margin: auto;
+			height: 100%;
+			display: flex;
+			flex-direction: column;
+		}
 
-#header {
-	display: flex;
-	align-items: center; justify-content : space-between; padding : 15px
-	20px;
-	position: relative;
-	justify-content: space-between;
-	padding: 15px 20px;
-}
+		#header {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding: 15px 20px;
+			position: relative;
+			justify-content: space-between;
+			padding: 15px 20px;
+		}
 
-.menu-icon {
-	width: 25px;
-	height: 20px;
-	background-image:
-		url('data:image/svg+xml;charset=UTF-8,<svg width="25" height="20" xmlns="http://www.w3.org/2000/svg"><rect width="25" height="3" y="0" fill="%23333"/><rect width="25" height="3" y="8" fill="%23333"/><rect width="25" height="3" y="16" fill="%23333"/></svg>');
-	background-size: cover;
-}
+		.menu-icon {
+			width: 25px;
+			height: 20px;
+			background-image:
+				url('data:image/svg+xml;charset=UTF-8,<svg width="25" height="20" xmlns="http://www.w3.org/2000/svg"><rect width="25" height="3" y="0" fill="%23333"/><rect width="25" height="3" y="8" fill="%23333"/><rect width="25" height="3" y="16" fill="%23333"/></svg>');
+			background-size: cover;
+		}
 
-#container {
-	flex: 1;
-	position: relative;
-}
+		#container {
+			flex: 1;
+			position: relative;
+		}
 
-#map {
-	width: 100%;
-	height: 100%;
-}
+		#map {
+			width: 100%;
+			height: 100%;
+		}
 
-.search-bar {
-	position: absolute;
-	top: 20px;
-	left: 50%;
-	transform: translateX(-50%);
-	align-items: center;
-	background: white;
-	padding: 0px 15px;
-	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-	border: 2px solid #337DFF;
-	border-radius: 18px;
-	z-index: 10;
-	height: 44px;
-	display: flex;
-	justify-content: center;
-	width: 750px;
-}
+		.search-bar {
+			position: absolute;
+			top: 20px;
+			left: 50%;
+			transform: translateX(-50%);
+			align-items: center;
+			background: white;
+			padding: 0px 15px;
+			box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+			border: 2px solid #337DFF;
+			border-radius: 18px;
+			z-index: 10;
+			height: 44px;
+			display: flex;
+			justify-content: center;
+			width: 750px;
+		}
 
-.search-bar input {
-	width: 100%;
-	padding: 10px 12px;
-	border: none;
-	font-size: 14px;
-	outline: none;
-}
+		.search-bar input {
+			width: 100%;
+			padding: 10px 12px;
+			border: none;
+			font-size: 14px;
+			outline: none;
+		}
 
-.btn_search {
-	background: none;
-	border: none;
-	margin-left: 10px;
-	cursor: pointer;
-}
+		.btn_search {
+			background: none;
+			border: none;
+			margin-left: 10px;
+			cursor: pointer;
+		}
 
-.btn_search:hover {
-	opacity: 0.8;
-}
+		.btn_search:hover {
+			opacity: 0.8;
+		}
 
-.btn_search img {
-	width: 25px;
-	height: 25px;
-}
+		.btn_search img {
+			width: 25px;
+			height: 25px;
+		}
 
-#result-list {
-	position: absolute;
-	top: 66px;
-	left: 50%;
-	transform: translateX(-50%);
-	width: 100%;
-	max-width: 750px;
-	overflow-y: auto;
-	background: white;
-	border: 2px solid #337DFF;
-	border-radius: 0px 0px 18px 18px;
-	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-	z-index: 15;
-	padding: 0px 15px;
-	display: none;
-}
+		#result-list {
+			position: absolute;
+			top: 66px;
+			left: 50%;
+			transform: translateX(-50%);
+			width: 100%;
+			max-width: 750px;
+			overflow-y: auto;
+			background: white;
+			border: 2px solid #337DFF;
+			border-radius: 0px 0px 18px 18px;
+			box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+			z-index: 15;
+			padding: 0px 15px;
+			display: none;
+		}
 
-#result-list div {
-	padding: 10px;
-	border-bottom: 1px solid #eee;
-	cursor: pointer;
-}
+		#result-list div {
+			padding: 10px;
+			border-bottom: 1px solid #eee;
+			cursor: pointer;
+		}
 
-#result-list div:hover {
-	background-color: #f0f0f0;
-}
+		#result-list div:hover {
+			background-color: #f0f0f0;
+		}
 
-.menu-icon {
-	width: 25px;
-	height: 20px;
-	background-image:
-		url('data:image/svg+xml;charset=UTF-8,<svg width="25" height="20" xmlns="http://www.w3.org/2000/svg"><rect width="25" height="3" y="0" fill="%23333"/><rect width="25" height="3" y="8" fill="%23333"/><rect width="25" height="3" y="16" fill="%23333"/></svg>');
-	background-size: cover;
-	cursor: pointer;
-}
+		.menu-icon {
+			width: 25px;
+			height: 20px;
+			background-image:
+				url('data:image/svg+xml;charset=UTF-8,<svg width="25" height="20" xmlns="http://www.w3.org/2000/svg"><rect width="25" height="3" y="0" fill="%23333"/><rect width="25" height="3" y="8" fill="%23333"/><rect width="25" height="3" y="16" fill="%23333"/></svg>');
+			background-size: cover;
+			cursor: pointer;
+		}
 
-#menuList {
-	position: absolute;
-	top: 60px;
-	left: 20px;
-	background-color: #f9f9f9;
-	border: 1px solid #ccc;
-	border-radius: 10px;
-	padding: 15px;
-	width: 200px;
-	display: none;
-	z-index: 999;
-}
+		#menuList {
+			position: absolute;
+			top: 60px;
+			left: 20px;
+			background-color: #f9f9f9;
+			border: 1px solid #ccc;
+			border-radius: 10px;
+			padding: 15px;
+			width: 200px;
+			display: none;
+			z-index: 999;
+		}
 
-.login-message {
-	font-size: 14px;
-	color: #333;
-	margin-bottom: 10px;
-	font-weight: bold;
-}
+		.login-message {
+			font-size: 14px;
+			color: #333;
+			margin-bottom: 10px;
+			font-weight: bold;
+		}
 
-.login-btn {
-	display: block;
-	width: 100%;
-	padding: 8px;
-	background-color: #337DFF;
-	color: white;
-	border: none;
-	border-radius: 6px;
-	cursor: pointer;
-	margin-bottom: 10px;
-}
+		.login-btn {
+			display: block;
+			width: 100%;
+			padding: 8px;
+			background-color: #337DFF;
+			color: white;
+			border: none;
+			border-radius: 6px;
+			cursor: pointer;
+			margin-bottom: 10px;
+		}
 
-#menuList ul {
-	list-style: none;
-	padding: 0;
-	margin: 0;
-}
+		#menuList ul {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+		}
 
-#menuList ul li {
-	padding: 8px;
-	cursor: pointer;
-	border-bottom: 1px solid #eee;
-}
+		#menuList ul li {
+			padding: 8px;
+			cursor: pointer;
+			border-bottom: 1px solid #eee;
+		}
 
-#menuList ul li:hover {
-	background-color: #eee;
-}
-</style>
+		#menuList ul li:hover {
+			background-color: #eee;
+		}
+	</style>
 </head>
 
 <body>
@@ -189,10 +191,8 @@ html, body {
 				<div class="login-message" th:if="${userName == null}">로그인이
 					필요합니다.</div>
 
-				<button class="login-btn" th:if="${userName == null}"
-					onclick="location.href='/login'">로그인</button>
-				<button class="login-btn" th:if="${userName != null}"
-					onclick="location.href='/logout'">로그아웃</button>
+				<button class="login-btn" th:if="${userName == null}" onclick="location.href='/login'">로그인</button>
+				<button class="login-btn" th:if="${userName != null}" onclick="location.href='/logout'">로그아웃</button>
 
 				<ul>
 					<li th:if="${userName != null}" onclick="alert('내 정보 보기')">내
@@ -220,78 +220,103 @@ html, body {
 	</div>
 
 	<script>
-	function toggleMenu() {
-	      const menu = document.getElementById("menuList");
-	      menu.style.display = (menu.style.display === "block") ? "none" : "block";
-	    }
-	
-        const container = document.getElementById('map');
-        const mapOptions = {
-            center: new kakao.maps.LatLng(37.5665, 126.9780),
-            level: 4
-        };
-        const map = new kakao.maps.Map(container, mapOptions);
-        const input = document.querySelector('.search-bar input');
-        const searchBtn = document.querySelector('.btn_search');
-        const resultList = document.getElementById('result-list');
-        const geocoder = new kakao.maps.services.Geocoder();
-        const search_bar = document.querySelector('.search-bar')
+		// 메뉴 버튼
+		function toggleMenu() {
+			const menu = document.getElementById("menuList");
+			menu.style.display = (menu.style.display === "block") ? "none" : "block";
+		}
 
-        let searchMarker = null;
+		const container = document.getElementById('map');
+		const mapOptions = {
+			center: new kakao.maps.LatLng(37.5665, 126.9780),
+			level: 4
+		};
+		const map = new kakao.maps.Map(container, mapOptions);
+		const input = document.querySelector('.search-bar input');
+		const searchBtn = document.querySelector('.btn_search');
+		const resultList = document.getElementById('result-list');
+		const geocoder = new kakao.maps.services.Geocoder();
+		const ps = new kakao.maps.services.Places();
+		const search_bar = document.querySelector('.search-bar')
 
-        function performSearch() {
-            search_bar.style.borderRadius = "18px 18px 0px 0px"
+		let markers = [];
 
-            const query = input.value.trim();
-            if (!query) {
-                alert("주소를 입력해주세요.");
-                search_bar.style.borderRadius = "18px"
-                return;
-            }
+		// 마커 지우기
+		function clearMarkers() {
+			markers.forEach(marker => marker.setMap(null));
+			markers = [];
+		}
 
-            geocoder.addressSearch(query, (result, status) => {
-                if (status === kakao.maps.services.Status.OK) {
-                    resultList.innerHTML = '';
-                    result.forEach(place => {
-                        const item = document.createElement('div');
-                        item.textContent = place.address_name;
+		function displayResults(data) {
+			resultList.innerHTML = '';
+			clearMarkers();
 
-                        item.addEventListener('click', () => {
-                            const coords = new kakao.maps.LatLng(place.y, place.x);
-                            map.setCenter(coords);
+			if (!data.length) {
+				resultList.style.display = 'none';
+				return;
+			}
 
-                            if (searchMarker) searchMarker.setMap(null);
-                            searchMarker = new kakao.maps.Marker({
-                                map: map,
-                                position: coords
-                            });
+			data.forEach(place => {
+				const item = document.createElement('div');
+				item.textContent = place.place_name;
+				item.addEventListener('click', () => {
+					const coords = new kakao.maps.LatLng(place.y, place.x);
+					map.setCenter(coords);
 
-                            resultList.style.display = 'none';
-                            search_bar.style.borderRadius = "18px"
-                        });
+					clearMarkers();
+					const marker = new kakao.maps.Marker({
+						map: map,
+						position: coords
+					});
+					markers.push(marker);
 
-                        resultList.appendChild(item);
-                    });
+					resultList.style.display = 'none';
+					search_bar.style.borderRadius = "18px"
+				});
+				resultList.appendChild(item);
+			});
 
-                    resultList.style.display = 'block';
-                } else {
-                    alert("주소를 찾을 수 없습니다.");
-                    resultList.style.display = 'none';
-                    search_bar.style.borderRadius = "18px"
-                }
-            });
-        }
+			resultList.style.display = 'block';
+		}
 
-        // 버튼 클릭
-        searchBtn.addEventListener('click', performSearch);
+		function searchPlaces() {
+			search_bar.style.borderRadius = "18px 18px 0px 0px"
 
-        // 엔터 키 입력
-        input.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-                performSearch();
-            }
-        });
-    </script>
+			const keyword = input.value.trim();
+			if (!keyword) {
+				resultList.style.display = 'none';
+				search_bar.style.borderRadius = "18px";
+				return;
+			}
+			ps.keywordSearch(keyword, (data, status) => {
+				if (status === kakao.maps.services.Status.OK && data.length > 0) {
+					displayResults(data);
+				} else {
+					resultList.innerHTML = '<div style="padding: 10px; color: gray; text-align: center;">검색 결과가 없습니다.</div>';
+					resultList.style.display = 'block';
+					search_bar.style.borderRadius = "18px 18px 0px 0px";
+					clearMarkers();
+				}
+			});
+		}
+
+
+		// 버튼 클릭으로 검색
+		searchBtn.addEventListener('click', () => {
+			searchPlaces();
+		});
+
+		// 입력 중 자동완성 검색
+		input.addEventListener('keyup', (e) => {
+			if (e.key != 'Enter') {
+				searchPlaces();
+			} else {
+				document.querySelector("#result-list>div").click()
+
+			}
+		});
+
+	</script>
 </body>
 
 </html>
