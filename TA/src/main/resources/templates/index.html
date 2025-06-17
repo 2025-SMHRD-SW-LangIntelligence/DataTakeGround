@@ -272,6 +272,7 @@
 
 					resultList.style.display = 'none';
 					search_bar.style.borderRadius = "18px"
+					input.value = item.textContent
 				});
 				resultList.appendChild(item);
 			});
@@ -308,11 +309,10 @@
 
 		// 입력 중 자동완성 검색
 		input.addEventListener('keyup', (e) => {
-			if (e.key != 'Enter') {
-				searchPlaces();
-			} else {
-				document.querySelector("#result-list>div").click()
+			searchPlaces();
 
+			if (e.key === 'Enter') {
+				resultList.style.display = 'none';
 			}
 		});
 
