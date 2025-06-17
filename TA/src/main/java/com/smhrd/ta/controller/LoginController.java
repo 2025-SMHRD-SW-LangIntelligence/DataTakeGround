@@ -52,11 +52,11 @@ public class LoginController {
     }
 
     @GetMapping("/")
-    public String index(HttpSession session, Model model) {
+    public String main(HttpSession session, Model model) {
         User loginUser = (User) session.getAttribute("loginUser");
         if (loginUser != null) {
             model.addAttribute("userName", loginUser.getName());
         }
-        return "index";
+        return "main";
     }
 }
