@@ -12,8 +12,10 @@ public class UserService {
     private UserRepository userRepository;
 
     public boolean isUsernameAvailable(String username) {
-        return !userRepository.existsByUsername(username);
+        return !userRepository.findByUsername(username).isPresent();  // 중요
     }
+
+
 
     public void registerUser(User user) {
         // 비밀번호 암호화 추가
