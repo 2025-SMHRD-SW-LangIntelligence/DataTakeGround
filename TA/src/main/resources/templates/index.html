@@ -2,263 +2,264 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<meta charset="UTF-8" />
-<title>우리 동네 지반침하 안전점수</title>
-<script type="text/javascript"
-	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cd3f88c99b509eab24270116d671ff65&libraries=services,clusterer"></script>
-<style>
-html, body {
-	height: 100%;
-	margin: 0;
-	padding: 0;
-	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-	background-color: white;
-}
+	<meta charset="UTF-8" />
+	<title>우리 동네 지반침하 안전점수</title>
+	<script type="text/javascript"
+		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cd3f88c99b509eab24270116d671ff65&libraries=services,clusterer"></script>
+	<style>
+		html,
+		body {
+			height: 100%;
+			margin: 0;
+			padding: 0;
+			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+			background-color: white;
+		}
 
-#wrap {
-	max-width: 1200px;
-	margin: auto;
-	height: 100%;
-	display: flex;
-	flex-direction: column;
-}
+		#wrap {
+			max-width: 1200px;
+			margin: auto;
+			height: 100%;
+			display: flex;
+			flex-direction: column;
+		}
 
-#header {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	padding: 15px 20px;
-	position: relative;
-	justify-content: space-between;
-	padding: 15px 20px;
-}
+		#header {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding: 15px 20px;
+			position: relative;
+			justify-content: space-between;
+			padding: 15px 20px;
+		}
 
-.menu-icon {
-	width: 25px;
-	height: 20px;
-	background-image:
-		url('data:image/svg+xml;charset=UTF-8,<svg width="25" height="20" xmlns="http://www.w3.org/2000/svg"><rect width="25" height="3" y="0" fill="%23333"/><rect width="25" height="3" y="8" fill="%23333"/><rect width="25" height="3" y="16" fill="%23333"/></svg>');
-	background-size: cover;
-}
+		.menu-icon {
+			width: 25px;
+			height: 20px;
+			background-image:
+				url('data:image/svg+xml;charset=UTF-8,<svg width="25" height="20" xmlns="http://www.w3.org/2000/svg"><rect width="25" height="3" y="0" fill="%23333"/><rect width="25" height="3" y="8" fill="%23333"/><rect width="25" height="3" y="16" fill="%23333"/></svg>');
+			background-size: cover;
+		}
 
-#container {
-	flex: 1;
-	position: relative;
-}
+		#container {
+			flex: 1;
+			position: relative;
+		}
 
-#map {
-	width: 100%;
-	height: 100%;
-}
+		#map {
+			width: 100%;
+			height: 100%;
+		}
 
-.search-bar {
-	position: absolute;
-	top: 20px;
-	left: 50%;
-	transform: translateX(-50%);
-	align-items: center;
-	background: white;
-	padding: 0px 15px;
-	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-	border: 2px solid #337DFF;
-	border-radius: 18px;
-	z-index: 10;
-	height: 44px;
-	display: flex;
-	justify-content: center;
-	width: 750px;
-}
+		.search-bar {
+			position: absolute;
+			top: 20px;
+			left: 50%;
+			transform: translateX(-50%);
+			align-items: center;
+			background: white;
+			padding: 0px 15px;
+			box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+			border: 2px solid #337DFF;
+			border-radius: 18px;
+			z-index: 10;
+			height: 44px;
+			display: flex;
+			justify-content: center;
+			width: 750px;
+		}
 
-.search-bar input {
-	width: 100%;
-	padding: 10px 12px;
-	border: none;
-	font-size: 14px;
-	outline: none;
-}
+		.search-bar input {
+			width: 100%;
+			padding: 10px 12px;
+			border: none;
+			font-size: 14px;
+			outline: none;
+		}
 
-.btn_search {
-	background: none;
-	border: none;
-	margin-left: 10px;
-	cursor: pointer;
-}
+		.btn_search {
+			background: none;
+			border: none;
+			margin-left: 10px;
+			cursor: pointer;
+		}
 
-.btn_search:hover {
-	opacity: 0.8;
-}
+		.btn_search:hover {
+			opacity: 0.8;
+		}
 
-.btn_search img {
-	width: 25px;
-	height: 25px;
-}
+		.btn_search img {
+			width: 25px;
+			height: 25px;
+		}
 
-#result-list {
-	position: absolute;
-	top: 66px;
-	left: 50%;
-	transform: translateX(-50%);
-	width: 100%;
-	max-width: 750px;
-	overflow-y: auto;
-	background: white;
-	border: 2px solid #337DFF;
-	border-radius: 0px 0px 18px 18px;
-	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-	z-index: 15;
-	padding: 0px 15px;
-	display: none;
-}
+		#result-list {
+			position: absolute;
+			top: 66px;
+			left: 50%;
+			transform: translateX(-50%);
+			width: 100%;
+			max-width: 750px;
+			overflow-y: auto;
+			background: white;
+			border: 2px solid #337DFF;
+			border-radius: 0px 0px 18px 18px;
+			box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+			z-index: 15;
+			padding: 0px 15px;
+			display: none;
+		}
 
-#result-list div {
-	padding: 10px;
-	border-bottom: 1px solid #eee;
-	cursor: pointer;
-}
+		#result-list div {
+			padding: 10px;
+			border-bottom: 1px solid #eee;
+			cursor: pointer;
+		}
 
-#result-list div:hover {
-	background-color: #f0f0f0;
-}
+		#result-list div:hover {
+			background-color: #f0f0f0;
+		}
 
-.menu-icon {
-	width: 25px;
-	height: 20px;
-	background-image:
-		url('data:image/svg+xml;charset=UTF-8,<svg width="25" height="20" xmlns="http://www.w3.org/2000/svg"><rect width="25" height="3" y="0" fill="%23333"/><rect width="25" height="3" y="8" fill="%23333"/><rect width="25" height="3" y="16" fill="%23333"/></svg>');
-	background-size: cover;
-	cursor: pointer;
-}
+		.menu-icon {
+			width: 25px;
+			height: 20px;
+			background-image:
+				url('data:image/svg+xml;charset=UTF-8,<svg width="25" height="20" xmlns="http://www.w3.org/2000/svg"><rect width="25" height="3" y="0" fill="%23333"/><rect width="25" height="3" y="8" fill="%23333"/><rect width="25" height="3" y="16" fill="%23333"/></svg>');
+			background-size: cover;
+			cursor: pointer;
+		}
 
-#menuList {
-	position: absolute;
-	top: 60px;
-	left: 20px;
-	background-color: #f9f9f9;
-	border: 1px solid #ccc;
-	border-radius: 10px;
-	padding: 15px;
-	width: 200px;
-	display: none;
-	z-index: 999;
-}
+		#menuList {
+			position: absolute;
+			top: 60px;
+			left: 20px;
+			background-color: #f9f9f9;
+			border: 1px solid #ccc;
+			border-radius: 10px;
+			padding: 15px;
+			width: 200px;
+			display: none;
+			z-index: 999;
+		}
 
-.login-message {
-	font-size: 14px;
-	color: #333;
-	margin-bottom: 10px;
-	font-weight: bold;
-}
+		.login-message {
+			font-size: 14px;
+			color: #333;
+			margin-bottom: 10px;
+			font-weight: bold;
+		}
 
-.login-btn {
-	display: block;
-	width: 100%;
-	padding: 8px;
-	background-color: #337DFF;
-	color: white;
-	border: none;
-	border-radius: 6px;
-	cursor: pointer;
-	margin-bottom: 10px;
-}
+		.login-btn {
+			display: block;
+			width: 100%;
+			padding: 8px;
+			background-color: #337DFF;
+			color: white;
+			border: none;
+			border-radius: 6px;
+			cursor: pointer;
+			margin-bottom: 10px;
+		}
 
-#menuList ul {
-	list-style: none;
-	padding: 0;
-	margin: 0;
-}
+		#menuList ul {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+		}
 
-#menuList ul li {
-	padding: 8px;
-	cursor: pointer;
-	border-bottom: 1px solid #eee;
-}
+		#menuList ul li {
+			padding: 8px;
+			cursor: pointer;
+			border-bottom: 1px solid #eee;
+		}
 
-#menuList ul li:hover {
-	background-color: #eee;
-}
+		#menuList ul li:hover {
+			background-color: #eee;
+		}
 
-.radius_border {
-	border: 1px solid #919191;
-	border-radius: 5px;
-}
+		.radius_border {
+			border: 1px solid #919191;
+			border-radius: 5px;
+		}
 
-.custom_location_control {
-	position: absolute;
-	top: 80px;
-	left: 10px;
-	width: 32px;
-	height: 32px;
-	overflow: hidden;
-	z-index: 1;
-	background-color: #f5f5f5;
-}
+		.custom_location_control {
+			position: absolute;
+			top: 80px;
+			left: 10px;
+			width: 32px;
+			height: 32px;
+			overflow: hidden;
+			z-index: 1;
+			background-color: #f5f5f5;
+		}
 
-.custom_location_control span {
-	display: block;
-	width: 32px;
-	height: 32px;
-	text-align: center;
-	cursor: pointer;
-}
+		.custom_location_control span {
+			display: block;
+			width: 32px;
+			height: 32px;
+			text-align: center;
+			cursor: pointer;
+		}
 
-.custom_location_control span img {
-	width: 15px;
-	height: 15px;
-	padding: 9px 0;
-	border: none;
-}
+		.custom_location_control span img {
+			width: 15px;
+			height: 15px;
+			padding: 9px 0;
+			border: none;
+		}
 
-.custom_location_control span img:hover {
-	opacity: 0.5;
-}
+		.custom_location_control span img:hover {
+			opacity: 0.5;
+		}
 
-.radius_border {
-	border: 1px solid #919191;
-	border-radius: 5px;
-}
+		.radius_border {
+			border: 1px solid #919191;
+			border-radius: 5px;
+		}
 
-#popupOverlay {
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background: rgba(0, 0, 0, 0.5);
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	z-index: 1000;
-}
+		#popupOverlay {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: rgba(0, 0, 0, 0.5);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			z-index: 1000;
+		}
 
-#popupContent {
-	background: white;
-	padding: 30px;
-	border-radius: 12px;
-	width: 400px;
-	max-width: 80%;
-	text-align: center;
-	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
+		#popupContent {
+			background: white;
+			padding: 30px;
+			border-radius: 12px;
+			width: 400px;
+			max-width: 80%;
+			text-align: center;
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+		}
 
-#popupContent h2 {
-	margin-top: 0;
-	color: #337DFF;
-}
+		#popupContent h2 {
+			margin-top: 0;
+			color: #337DFF;
+		}
 
-#popupContent button {
-	margin-top: 20px;
-	padding: 8px 16px;
-	background-color: #337DFF;
-	color: white;
-	border: none;
-	border-radius: 6px;
-	cursor: pointer;
-}
+		#popupContent button {
+			margin-top: 20px;
+			padding: 8px 16px;
+			background-color: #337DFF;
+			color: white;
+			border: none;
+			border-radius: 6px;
+			cursor: pointer;
+		}
 
-#popupContent button:hover {
-	background-color: #285fd0;
-}
-</style>
+		#popupContent button:hover {
+			background-color: #285fd0;
+		}
+	</style>
 </head>
 
 <body>
@@ -284,8 +285,7 @@ html, body {
 					필요합니다.</div>
 
 
-				<button class="login-btn" th:if="${userName == null}"
-					onclick="location.href='/login'">로그인</button>
+				<button class="login-btn" th:if="${userName == null}" onclick="location.href='/login'">로그인</button>
 				<ul>
 					<li onclick="location.href='/report'">제보게시판</li>
 					<li onclick="location.href='/reward'">신고 포상금 제도</li>
@@ -295,8 +295,7 @@ html, body {
 					<li onclick="location.href='/notice'">공지사항</li>
 
 				</ul>
-				<button class="login-btn" th:if="${userName != null}"
-					onclick="location.href='/logout'">로그아웃</button>
+				<button class="login-btn" th:if="${userName != null}" onclick="location.href='/logout'">로그아웃</button>
 
 
 			</div>
@@ -350,7 +349,7 @@ html, body {
 		const search_bar = document.querySelector('.search-bar')
 
 		let markers = [];
-		
+
 		// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
 		var zoomControl = new kakao.maps.ZoomControl();
 		map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
@@ -429,44 +428,82 @@ html, body {
 				resultList.style.display = 'none';
 			}
 		});
-		
-		function user_location(){
+
+		function user_location() {
 			let userLocation = navigator.geolocation.getCurrentPosition((position) => {
 				map.setCenter(new kakao.maps.LatLng(position.coords.latitude, position.coords.longitude))
 			})
 		}
-		
+
 		// 팝업 닫기
 		function closePopup() {
 			const popup = document.getElementById('popupOverlay');
 			popup.style.display = 'none';
 		}
 
+		// 오버레이 전역 선언
+		let currentOverlay = null;
+
 		function fetchMarkersInBounds() {
-			  const bounds = map.getBounds();
-			  const sw = bounds.getSouthWest();
-			  const ne = bounds.getNorthEast();
+			const bounds = map.getBounds();
+			const sw = bounds.getSouthWest();
+			const ne = bounds.getNorthEast();
 
-			  const url = `/api/occur/within?swLat=${sw.getLat()}&swLng=${sw.getLng()}&neLat=${ne.getLat()}&neLng=${ne.getLng()}`;
+			const url = `/api/occur/within?swLat=${sw.getLat()}&swLng=${sw.getLng()}&neLat=${ne.getLat()}&neLng=${ne.getLng()}`;
 
-			  fetch(url)
-			    .then(res => res.json())
-			    .then(data => {
-			      // 기존 마커 제거
-			      markers.forEach(m => m.setMap(null));
-			      markers = [];
+			fetch(url)
+				.then(res => res.json())
+				.then(data => {
+					// 기존 마커 제거
+					markers.forEach(m => m.setMap(null));
+					markers = [];
 
-			      // 새로운 마커 생성
-			      data.forEach(d => {
-			        const marker = new kakao.maps.Marker({
-			          map: map,
-			          position: new kakao.maps.LatLng(d.latitude, d.longitude),
-			          title: d.location
-			        });
-			        markers.push(marker);
-			      });
-			    });
-			}
+					// 새로운 마커 생성
+					data.forEach(d => {
+						const marker = new kakao.maps.Marker({
+							map: map,
+							position: new kakao.maps.LatLng(d.latitude, d.longitude),
+							title: d.location
+						});
+
+						kakao.maps.event.addListener(marker, 'click', function () {
+							if (currentOverlay) currentOverlay.setMap(null);
+
+							const content = `
+			              <div style="width: 300px; border-radius:10px; box-shadow:0px 2px 6px rgba(0,0,0,0.3); background:white; font-family:sans-serif;">
+			                <div style="background:#1e90ff; color:white; padding:10px; border-radius:10px 10px 0 0; font-weight:bold; display:flex; justify-content:space-between;">
+			                  <span>싱크홀 지도 상세 정보</span>
+			                  <span onclick="overlayClose()" style="cursor:pointer;">❌</span>
+			                </div>
+			                <div style="padding:10px; font-size:14px;">
+			                  <p><strong>📍 발생 위치:</strong> ${d.location}</p>
+			                  <p><strong>📅 발생 일자:</strong> ${d.sagoDate}</p>
+			                  <p><strong>📐 싱크홀 규모:</strong> ${d.sinkWidth}m / ${d.sinkExtend}m / ${d.sinkDepth}m</p>
+			                  <p><strong>🪨 지질:</strong> ${d.bedType} <br><span style="color:gray; font-size:12px;">${d.bedInfo}</span></p>
+			                  <p><strong style="color:red;">⚠️ 발생 원인:</strong> ${d.sagoDetail}</p>
+			                  ${d.sagoImgUrl !== 'nan' ? `<img src="${d.sagoImgUrl}" style="width:100%; margin:10px 0; border-radius:8px;">` : ''}
+			                  <p><strong>🚗 차량 피해:</strong> ${d.vehicleCnt}대</p>
+			                  ${d.sagoNewsUrl !== 'nan' ? `<p><strong>📰 뉴스 링크:</strong> <a href="${d.sagoNewsUrl}" target="_blank">${d.sagoNewsUrl}</a></p>` : ''}
+			                  <p><strong>🔧 처리 상태:</strong> ${d.trStatus} (${d.trFnDate})</p>
+			                  <p><strong>🛠 처리 방법:</strong> ${d.trMethod}</p>
+			                  <button onclick="overlayClose()" style="width:100%; margin-top:10px; padding:8px; background:#1e90ff; border:none; color:white; border-radius:6px;">닫기</button>
+			                </div>
+			              </div>
+			            `;
+
+							currentOverlay = new kakao.maps.CustomOverlay({
+								content: content,
+								position: marker.getPosition(),
+								xAnchor: 0.5,
+								yAnchor: 1.0
+							});
+
+							currentOverlay.setMap(map);
+						});
+						markers.push(marker);
+					});
+				});
+		}
 
 		// 지도 이동 또는 확대/축소 시마다 마커 갱신
 		kakao.maps.event.addListener(map, 'idle', fetchMarkersInBounds);
@@ -474,7 +511,12 @@ html, body {
 		// 최초 로딩 시 실행
 		fetchMarkersInBounds();
 
-		
+		// 오버레이 닫기 함수
+		function overlayClose() {
+			if (currentOverlay) currentOverlay.setMap(null);
+		}
+
+
 
 	</script>
 </body>
