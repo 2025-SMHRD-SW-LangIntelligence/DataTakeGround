@@ -1,7 +1,11 @@
 package com.smhrd.ta.entity;
 
 import jakarta.persistence.*;
+
 import java.io.Serializable;
+
+
+
 
 @Entity
 @Table(name = "users")

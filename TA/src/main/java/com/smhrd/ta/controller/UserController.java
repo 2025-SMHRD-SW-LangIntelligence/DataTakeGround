@@ -1,16 +1,20 @@
 package com.smhrd.ta.controller;
 
 import java.util.List;
+
 import java.util.Optional;
 import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+
 import com.smhrd.ta.entity.EmailVerification;
 import com.smhrd.ta.entity.User;
 import com.smhrd.ta.repository.EmailVerificationRepository;
 import com.smhrd.ta.service.UserService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class UserController {
@@ -55,5 +59,7 @@ public class UserController {
             return "join";
         }
     }
+    
+    
 }
 
