@@ -5,7 +5,7 @@
 <meta charset="UTF-8" />
 <title>우리 동네 지반침하 안전점수</title>
 <script type="text/javascript"
-	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cd3f88c99b509eab24270116d671ff65&libraries=services"></script>
+	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cd3f88c99b509eab24270116d671ff65&libraries=services,clusterer"></script>
 <style>
 html, body {
 	height: 100%;
@@ -207,8 +207,9 @@ html, body {
 	padding: 9px 0;
 	border: none;
 }
+
 .custom_location_control span img:hover {
-	opacity : 0.5;
+	opacity: 0.5;
 }
 
 .radius_border {
@@ -441,6 +442,39 @@ html, body {
 			popup.style.display = 'none';
 		}
 
+		function fetchMarkersInBounds() {
+			  const bounds = map.getBounds();
+			  const sw = bounds.getSouthWest();
+			  const ne = bounds.getNorthEast();
+
+			  const url = `/api/occur/within?swLat=${sw.getLat()}&swLng=${sw.getLng()}&neLat=${ne.getLat()}&neLng=${ne.getLng()}`;
+
+			  fetch(url)
+			    .then(res => res.json())
+			    .then(data => {
+			      // 기존 마커 제거
+			      markers.forEach(m => m.setMap(null));
+			      markers = [];
+
+			      // 새로운 마커 생성
+			      data.forEach(d => {
+			        const marker = new kakao.maps.Marker({
+			          map: map,
+			          position: new kakao.maps.LatLng(d.latitude, d.longitude),
+			          title: d.location
+			        });
+			        markers.push(marker);
+			      });
+			    });
+			}
+
+		// 지도 이동 또는 확대/축소 시마다 마커 갱신
+		kakao.maps.event.addListener(map, 'idle', fetchMarkersInBounds);
+
+		// 최초 로딩 시 실행
+		fetchMarkersInBounds();
+
+		
 
 	</script>
 </body>

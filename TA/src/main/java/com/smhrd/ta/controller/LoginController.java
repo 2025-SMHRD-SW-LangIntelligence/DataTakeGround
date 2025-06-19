@@ -1,67 +1,83 @@
 package com.smhrd.ta.controller;
 
-import com.smhrd.ta.entity.User;
-import com.smhrd.ta.repository.UserRepository;
-import jakarta.servlet.http.HttpSession;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Optional;
+import com.smhrd.ta.entity.User;
+import com.smhrd.ta.repository.EmailVerificationRepository;
+import com.smhrd.ta.repository.UserRepository;
+import com.smhrd.ta.service.OccurService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class LoginController {
 
-    @Autowired
-    private UserRepository userRepository;
+	private final EmailVerificationRepository emailVerificationRepository;
 
-    @PostMapping("/login")
-    public String login(@RequestParam String username,
-                        @RequestParam String password,
-                        HttpSession session,
-                        RedirectAttributes redirectAttributes) {
+	private final EmailController emailController;
 
-        Optional<User> optionalUser = userRepository.findByUsername(username);
+	@Autowired
+	private UserRepository userRepository;
 
-        if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
+	@Autowired
+	private OccurService occurService;
 
-            if (user.getPassword().equals(password)) {
-                session.setAttribute("loginUser", user);
-                redirectAttributes.addFlashAttribute("message", "로그인 되었습니다.");
-                return "redirect:/";  // 리다이렉트 시 flash 메시지 유지
-            }
-        }
+	LoginController(EmailController emailController, EmailVerificationRepository emailVerificationRepository) {
+		this.emailController = emailController;
+		this.emailVerificationRepository = emailVerificationRepository;
+	}
 
-        redirectAttributes.addFlashAttribute("errorMessage", "아이디 또는 비밀번호가 잘못되었습니다.");
-        return "redirect:/login";  // 실패시 리다이렉트 + 메시지 유지
-    }
+	@PostMapping("/login")
+	public String login(@RequestParam String username, @RequestParam String password, HttpSession session,
+			RedirectAttributes redirectAttributes) {
 
-    @GetMapping("/login")
-    public String loginPage(Model model) {
-        return "login";
-    }
+		Optional<User> optionalUser = userRepository.findByUsername(username);
 
-    @GetMapping("/logout")
-    public String logout(HttpSession session, RedirectAttributes redirectAttributes) {
-        session.invalidate();
-        redirectAttributes.addFlashAttribute("message", "로그아웃 되었습니다.");
-        return "redirect:/";
-    }
+		if (optionalUser.isPresent()) {
+			User user = optionalUser.get();
 
-    @GetMapping("/")
-    public String main(HttpSession session, Model model) {
-        User loginUser = (User) session.getAttribute("loginUser");
-        if (loginUser != null) {
-            model.addAttribute("userName", loginUser.getName());
-        }
-        return "index";
-    }
-    
-    @GetMapping("/index")
-    public String main_page() {
-    	return "index";
-    }
+			if (user.getPassword().equals(password)) {
+				session.setAttribute("loginUser", user);
+				redirectAttributes.addFlashAttribute("message", "로그인 되었습니다.");
+				return "redirect:/"; // 리다이렉트 시 flash 메시지 유지
+			}
+		}
+
+		redirectAttributes.addFlashAttribute("errorMessage", "아이디 또는 비밀번호가 잘못되었습니다.");
+		return "redirect:/login"; // 실패시 리다이렉트 + 메시지 유지
+	}
+
+	@GetMapping("/login")
+	public String loginPage(Model model) {
+		return "login";
+	}
+
+	@GetMapping("/logout")
+	public String logout(HttpSession session, RedirectAttributes redirectAttributes) {
+		session.invalidate();
+		redirectAttributes.addFlashAttribute("message", "로그아웃 되었습니다.");
+		return "redirect:/";
+	}
+
+	@GetMapping("/")
+	public String main(HttpSession session, Model model) {
+		User loginUser = (User) session.getAttribute("loginUser");
+		if (loginUser != null) {
+			model.addAttribute("userName", loginUser.getName());
+		}
+		return "index";
+	}
+
+	@GetMapping("/index")
+	public String main_page() {
+		return "index";
+	}
 }
