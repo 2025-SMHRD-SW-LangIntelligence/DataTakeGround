@@ -277,7 +277,6 @@
 		.modal-content {
 			width: 350px;
 			background: #fff;
-			border-radius: 12px;
 			overflow: hidden;
 			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 			font-family: 'Segoe UI', sans-serif;
@@ -291,10 +290,12 @@
 			font-weight: bold;
 			display: flex;
 			justify-content: space-between;
+			border-radius: 12px 12px 0px 0px;
 		}
 
 		.modal-close {
 			cursor: pointer;
+			color: red;
 		}
 
 		.modal-body {
@@ -320,7 +321,9 @@
 		.modal-footer {
 			padding: 10px 16px;
 			text-align: center;
-			background-color: #f5f5f5;
+			background-color: white;
+			border-radius: 0px 0px 12px 12px;
+			padding-top : 0;
 		}
 
 		.modal-footer button {
@@ -330,6 +333,8 @@
 			border-radius: 6px;
 			padding: 8px 16px;
 			cursor: pointer;
+			width : 100%;
+			font-weight : bold;
 		}
 
 		.modal-data-title {
@@ -339,7 +344,7 @@
 
 		.modal-data-info {
 			text-align: right;
-			flex:1;
+			flex: 1;
 		}
 
 		.modal-data {
@@ -347,17 +352,87 @@
 			word-wrap: break-word;
 			white-space: normal;
 		}
-		#si_info p{
+
+		#si_info p {
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
 			margin-block-start: 8px;
 			margin-block-end: 8px;
 		}
-		.si_title{
+
+		.si_title {
 			display: inline-block;
 			word-wrap: break-word;
 			white-space: normal;
+		}
+
+		.modal_slider_dot .dot {
+			width: 12px;
+			height: 12px;
+			background-color: rgb(0, 0, 0, 0.1);
+			display: inline-block;
+			border-radius: 50%;
+			text-indent: -9999px;
+			transition: all 0.3s;
+			margin: 2px;
+			cursor: pointer;
+		}
+
+		.modal_slider_dot .dot.active {
+			background-color: #1e90ff;
+			cursor: pointer;
+		}
+		
+		.modal_slider_btn {
+			display : none;
+		}
+
+		.modal_slider_btn a {
+			position: absolute;
+			top: 50%;
+			transform: translateY(-50%);
+			width: 15px;
+			height: 50px;
+			line-height: 50px;
+			text-align: center;
+			background-color: #1e90ff;
+			opacity: 0.5;
+			text-decoration: none;
+			color : white;
+			font-size : 20px;
+			font-weight : bold;
+		}
+
+		.modal_slider_btn a:hover {
+			cursor : pointer;
+			opacity : 1.0;
+		}
+
+		.modal_slider_btn a.prev {
+			left: 0;
+		}
+
+		.modal_slider_btn img {
+			width: 50px;
+			height: 50px;
+			background-color: white;
+		}
+
+		.modal_slider_btn a.next {
+			right: 0;
+		}
+
+		.modal_inner {
+			flex-wrap: wrap;
+			position : relative;
+		}
+		.modal_inner:hover .modal_slider_btn{
+			display : block;
+		}
+
+		.modal-content {
+			display: none;
 		}
 	</style>
 </head>
@@ -417,120 +492,133 @@
 			</div>
 			<!-- 모달 오버레이 -->
 			<div id="sinkholeModal" class="modal-overlay" style="display: none;">
-				<div class="modal-content">
+				<div class="modal_inner">
 					<div class="modal-header">
-						<span>싱크홀 지도 상세 정보</span>
-						<span class="modal-close" onclick="closeSinkholeModal()">✕</span>
+						<span>싱크홀 지도 상세 정보 (1 / 2) </span>
+						<span class="modal-close" onclick="closeSinkholeModal()">❌</span>
 					</div>
-					<div class="modal-body">
+					<div class="modal-container">
+						<div class="modal-content m1">
+							<div class="modal-body">
 
-						<h4>기본 정보</h4>
-						<p>
-							<span class="modal-data-title">
-								<strong>발생 위치:</strong>
-							</span>
-							<span class="modal-data-info">
-								<span id="modal-location" class="modal-data"></span>
-							</span>
-						</p>
+								<h4>기본 정보</h4>
+								<p>
+									<span class="modal-data-title">
+										<strong>발생 위치:</strong>
+									</span>
+									<span class="modal-data-info">
+										<span id="modal-location" class="modal-data"></span>
+									</span>
+								</p>
 
-						<p>
-							<span class="modal-data-title">
-								<strong>발생 일자:</strong>
-							</span>
-							<span class="modal-data-info">
-								<span id="modal-date" class="modal-data"></span>
-							</span>
-						</p>
-						<hr>
+								<p>
+									<span class="modal-data-title">
+										<strong>발생 일자:</strong>
+									</span>
+									<span class="modal-data-info">
+										<span id="modal-date" class="modal-data"></span>
+									</span>
+								</p>
+								<hr>
 
-						<h4>싱크홀 규모</h4>
-						<p>
-							<span class="modal-data-title">
-								<span>넓이 / 연장 / 깊이 </span>
-							</span>
-							<span class="modal-data-info">
-								<span id="modal-size" class="modal-data"></span>
-							</span>
-						</p>
-						<hr>
+								<h4>싱크홀 규모</h4>
+								<p>
+									<span class="modal-data-title">
+										<span>넓이 / 연장 / 깊이 </span>
+									</span>
+									<span class="modal-data-info">
+										<span id="modal-size" class="modal-data"></span>
+									</span>
+								</p>
+								<hr>
 
-						<h4>지질</h4>
-						<p>
-							<span class="modal-data-title">
-								<span id="modal-bedType"></span>
-							</span>
-							<span class="modal-data-info">
-								<span id="modal-bedInfo" class="modal-data"></span>
-							</span>
-						</p>
-						<hr>
+								<h4>피해 사진</h4>
+								<img id="modal-image" src="" alt="싱크홀 이미지"
+									style="width: 100%; border-radius: 8px; margin-bottom: 10px;" />
+								<hr>
 
-						<h4>발생 원인</h4>
-						<p style="color: red;" id="modal-detail"></p>
-						<hr>
+								<h4>발생 원인</h4>
+								<p style="color: red;" id="modal-detail"></p>
+								<hr>
+							</div>
+						</div>
+						<div class="modal-content m2">
+							<div class="modal-body">
+								<h4>지질</h4>
+								<p>
+									<span class="modal-data-title">
+										<span id="modal-bedType"></span>
+									</span>
+									<span class="modal-data-info">
+										<span id="modal-bedInfo" class="modal-data"></span>
+									</span>
+								</p>
+								<hr>
 
-						<h4>피해 사진</h4>
-						<img id="modal-image" src="" alt="싱크홀 이미지"
-							style="width: 100%; border-radius: 8px; margin-bottom: 10px;" />
-						<hr>
+								<h4>피해 상황</h4>
+								<p>
+									<span class="modal-data-title">
+										<strong>사망자 수:</strong>
+									</span>
+									<span class="modal-data-info">
+										<span id="modal-death" class="modal-data"></span>
+									</span>
+								</p>
+								<p>
+									<span class="modal-data-title">
+										<strong>부상자 수:</strong>
+									</span>
+									<span class="modal-data-info">
+										<span id="modal-injury" class="modal-data"></span>
+									</span>
+								</p>
+								<p>
+									<span class="modal-data-title">
+										<strong>차량 피해:</strong>
+									</span>
+									<span class="modal-data-info">
+										<span id="modal-vehicle" class="modal-data"></span>
+									</span>
+								</p>
+								<p>
+									<span class="modal-data-title">
+										<strong>관련 뉴스 URL:</strong>
+									</span>
+									<span class="modal-data-info">
+										<a id="modal-news" class="modal-data" href="#" target="_blank">바로가기</a>
+									</span>
+								</p>
+								<hr>
 
-						<h4>피해 상황</h4>
-						<p>
-							<span class="modal-data-title">
-								<strong>사망자 수:</strong>
-							</span>
-							<span class="modal-data-info">
-								<span id="modal-death" class="modal-data"></span>
-							</span>
-						</p>
-						<p>
-							<span class="modal-data-title">
-								<strong>부상자 수:</strong>
-							</span>
-							<span class="modal-data-info">
-								<span id="modal-injury" class="modal-data"></span>
-							</span>
-						</p>
-						<p>
-							<span class="modal-data-title">
-								<strong>차량 피해:</strong>
-							</span>
-							<span class="modal-data-info">
-								<span id="modal-vehicle" class="modal-data"></span>
-							</span>
-						</p>
-						<p>
-							<span class="modal-data-title">
-								<strong>관련 뉴스 URL:</strong>
-							</span>
-							<span class="modal-data-info">
-								<a id="modal-news" class="modal-data" href="#" target="_blank">바로가기</a>
-							</span>
-						</p>
-						<hr>
-
-						<h4>처리 상황</h4>
-						<p>
-							<span class="modal-data-title">
-								<strong>처리 상태:</strong>
-							</span>
-							<span class="modal-data-info">
-								<span id="modal-status" class="modal-data"></span>
-							</span>
-						</p>
-						<p>
-							<span class="modal-data-title">
-								<strong>처리 방법:</strong>
-							</span>
-							<span class="modal-data-info">
-								<span id="modal-method" class="modal-data"></span>
-							</span>
-						</p>
+								<h4>처리 상황</h4>
+								<p>
+									<span class="modal-data-title">
+										<strong>처리 상태:</strong>
+									</span>
+									<span class="modal-data-info">
+										<span id="modal-status" class="modal-data"></span>
+									</span>
+								</p>
+								<p>
+									<span class="modal-data-title">
+										<strong>처리 방법:</strong>
+									</span>
+									<span class="modal-data-info">
+										<span id="modal-method" class="modal-data"></span>
+									</span>
+								</p>
+							</div>
+						</div>
+						<div class="modal_slider_btn">
+							<a href="" class="prev" title="이전"> &lt </a>
+							<a href="#" class="next" title="다음"> &gt </a>
+						</div>
 					</div>
 					<div class="modal-footer">
+						<div class="modal_slider_dot"></div>
 						<button onclick="closeSinkholeModal()">닫기</button>
 					</div>
+
 				</div>
 			</div>
 		</div>
@@ -716,7 +804,7 @@
 									</span>
 									<span class="modal-data-info modal-data">${d.sinkWidth}m / ${d.sinkExtend}m / ${d.sinkDepth}m</span><br>
 									</p>
-			                  	<button id="openDetail" style="width:100%; margin-top:10px; padding:8px; background:#1e90ff; border:none; color:white; border-radius:6px;">상세보기</button>
+			                  	<button id="openDetail" style="width:100%; margin-top:10px; padding:8px; background:#1e90ff; border:none; color:white; border-radius:6px; cursor:pointer;">상세보기</button>
 			                	</div>
 			              	</div>`;
 
@@ -787,10 +875,64 @@
 
 					document.getElementById('sinkholeModal').style.display = 'flex';
 				})
+			document.getElementById('sinkholeModal').style.display = 'flex';
+
+			// 슬라이더 초기화
+			initModalSlider();
 		}
 
 		function closeSinkholeModal() {
 			document.getElementById('sinkholeModal').style.display = 'none';
+		}
+
+		// 모달 페이지 전환
+		let currentPage = 0; // 0: m1, 1: m2
+
+		function showModalPage(index) {
+			const pages = document.querySelectorAll(".modal-content");
+			const dots = document.querySelectorAll(".modal_slider_dot .dot");
+			const title = document.querySelectorAll("#sinkholeModal > div.modal_inner > div.modal-header > span:nth-child(1)");
+			title[0].innerText = "싱크홀 지도 상세 정보 (" + (index + 1) + " / 2)"
+
+			// 페이지 보여주기
+			pages.forEach((page, i) => {
+				page.style.display = (i === index) ? "block" : "none";
+			});
+
+			// Dot 표시 업데이트
+			dots.forEach((dot, i) => {
+				dot.classList.toggle("active", i === index);
+			});
+
+			currentPage = index;
+		}
+
+		// 이전 버튼
+		document.querySelector(".modal_slider_btn .prev").addEventListener("click", function (e) {
+			e.preventDefault();
+			const newIndex = (currentPage === 0) ? 1 : 0;
+			showModalPage(newIndex);
+		});
+
+		// 다음 버튼
+		document.querySelector(".modal_slider_btn .next").addEventListener("click", function (e) {
+			e.preventDefault();
+			const newIndex = (currentPage === 1) ? 0 : 1;
+			showModalPage(newIndex);
+		});
+
+		// 초기화 시 dot 생성 및 첫 페이지 표시
+		function initModalSlider() {
+			const dotContainer = document.querySelector(".modal_slider_dot");
+			dotContainer.innerHTML = ""; // 기존 제거
+			for (let i = 0; i < 2; i++) {
+				const dot = document.createElement("span");
+				dot.classList.add("dot");
+				if (i === 0) dot.classList.add("active");
+				dot.addEventListener("click", () => showModalPage(i));
+				dotContainer.appendChild(dot);
+			}
+			showModalPage(0);
 		}
 
 	</script>
