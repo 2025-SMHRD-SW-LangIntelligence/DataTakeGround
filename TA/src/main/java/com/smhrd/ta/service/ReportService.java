@@ -78,6 +78,9 @@ public class ReportService {
 	    return reportRepository.findAll(pageable);
 	}
 	
+	public void deleteReport(Long id) {
+        reportRepository.deleteById(id);  // ✅ 실제 삭제 수행
+    }
 	
 
 }

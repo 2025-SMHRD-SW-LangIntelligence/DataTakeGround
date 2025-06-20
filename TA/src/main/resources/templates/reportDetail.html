@@ -73,6 +73,23 @@ body {
 				없음</span>
 		</p>
 
+		<!-- ✅ 본문 아래 수정/삭제 버튼 (글 작성자만 보임) -->
+		
+		<div
+			th:if="${session.loginUser != null and session.loginUser.username == report.id}"
+			style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;"
+			class="d-flex gap-2">
+
+			<a th:href="@{/report/edit/{id}(id=${report.reportId})}"
+				class="btn btn-primary">✏️ 수정</a>
+					<!-- 📍 페이지 가장 바깥쪽(본문 내용 아래)에 위치 -->
+			<form th:action="@{/report/delete/{id}(id=${report.reportId})}"
+				method="post">
+				<button type="submit" class="btn btn-danger">🗑 삭제</button>
+			</form>
+		</div>
+
+
 		<div class="image-container">
 			<div th:if="${report.images != null and !report.images.isEmpty()}">
 				<img th:if="${report.images[0] != null}"
@@ -80,10 +97,11 @@ body {
 					style="max-width: 200px; max-height: 200px; margin-bottom: 10px;" />
 
 			</div>
-			
+
 			<div class="no-image"
 				th:if="${report.images == null or report.images.isEmpty()}">
 				업로드된 이미지가 없습니다.</div>
+
 		</div>
 	</div>
 </body>
