@@ -1,12 +1,18 @@
 package com.smhrd.ta.service;
 
-import com.smhrd.ta.entity.Report;
-import com.smhrd.ta.repository.ReportRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+
+import com.smhrd.ta.entity.Report;
+import com.smhrd.ta.repository.ReportRepository;
+
 
 @Service
 public class ReportService {
@@ -23,8 +29,23 @@ public class ReportService {
     }
 
     public Report findById(Long id) {
-        return reportRepository.findById(id).orElse(null);
+        return reportRepository.findWithImagesByReportId(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
     }
+    
+ // ReportService.java
+    public Page<Report> getPagedReports(int page) {
+        Pageable pageable = PageRequest.of(page, page, Sort.by("reportId").descending());
+        return reportRepository.findAll(pageable);
+    }
+
+    public Page<Report> searchPagedReports(String keyword, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("reportId").descending());
+        return reportRepository.findByContentContaining(keyword, pageable);
+    }
+
+
+
 
     public void deleteById(Long id) {
         reportRepository.deleteById(id);
@@ -41,9 +62,25 @@ public class ReportService {
             return new ArrayList<>(); // 검색 조건이 일치하지 않으면 빈 리스트
         }
     }
+    
+    public List<Report> searchReports(String keyword) {
+    	System.out.println("검색 키워드: " + keyword);
+        return reportRepository.findByContentContainingIgnoreCase(keyword);
+    }
+
 
 	public static void write(Report report) {
 		
 	}
+
+	public Page<Report> getPagedReports(int page, int size) {
+	    Pageable pageable = PageRequest.of(page, size, Sort.by("reportId").descending());
+	    return reportRepository.findAll(pageable);
+	}
+	
+	public void deleteReport(Long id) {
+        reportRepository.deleteById(id);  // ✅ 실제 삭제 수행
+    }
+	
 
 }

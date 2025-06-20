@@ -114,10 +114,12 @@ tbody tr:hover {
 				</tr>
 			</thead>
 			<tbody id="reportTable">
-				<tr th:each="report : ${reports}">
-					<td th:text="${report.reportId}">1</td>
+				<tr th:each="report, stat : ${reports}"
+					th:onclick="|location.href='@{/report/detail/{id}(id=${report.reportId})}'|"
+					style="cursor: pointer;">
+					<td th:text="${currentPage * 10 + stat.index + 1}">번호</td>
 					<td th:text="${report.content}">싱크홀 발생 의심</td>
-					<td th:text="${report.id}">user01</td>
+					<td th:text="${report.maskedId}">user01</td>
 					<td th:text="${report.writeDay}">2025-06-19</td>
 					<td th:text="${report.location}">서울 강남구</td>
 					<td><img th:if="${report.imgPath != null}"
@@ -126,7 +128,38 @@ tbody tr:hover {
 				</tr>
 			</tbody>
 
+
+
 		</table>
+
+		<!-- ✅ 페이지네이션 -->
+		<div class="d-flex justify-content-center mt-4">
+			<nav>
+				<ul class="pagination">
+					<li class="page-item"
+						th:classappend="${currentPage == 0} ? 'disabled'"><a
+						class="page-link"
+						th:href="@{/report/list(page=${currentPage - 1}, keyword=${keyword})}">이전</a>
+					</li>
+
+					<li class="page-item"
+						th:each="pageNum : ${#numbers.sequence(0, totalPages - 1)}"
+						th:classappend="${pageNum == currentPage} ? 'active'"><a
+						class="page-link"
+						th:href="@{/report/list(page=${pageNum}, keyword=${keyword})}"
+						th:text="${pageNum + 1}">1</a></li>
+
+					<li class="page-item"
+						th:classappend="${currentPage + 1 >= totalPages} ? 'disabled'">
+						<a class="page-link"
+						th:href="@{/report/list(page=${currentPage + 1}, keyword=${keyword})}">다음</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+
+
+
 
 		<!-- ✅ 제보 버튼 -->
 		<div class="write-btn">
@@ -152,42 +185,58 @@ tbody tr:hover {
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 	<!-- ✅ 검색 JS -->
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<script>
-function searchReport(event) {
+function searchReport(event) { // 키워드 검색 함수
     event.preventDefault();
 
     const type = document.getElementById("searchType").value;
-    const keyword = document.getElementById("keyword").value;
+    const keyword = document.getElementById("keyword").value.trim();
+
+    if (!keyword) {
+        alert("검색어를 입력하세요.");
+        return;
+    }
 
     $.ajax({
-        url: "/report/search",
+        url: "/report/search/json",  // json으로 연결 
         type: "GET",
         data: { type: type, keyword: keyword },
         success: function(data) {
             const tableBody = $("#reportTable");
             tableBody.empty();
 
-            if (data.length === 0) {
-                tableBody.append(`<tr><td colspan="5" class="text-center">검색 결과가 없습니다.</td></tr>`);
+            if (!data || data.length === 0) {
+                tableBody.append(`<tr><td colspan="6" class="text-center">검색 결과가 없습니다.</td></tr>`);
             } else {
-                $.each(data, function(index, report) {
-                    const row = `<tr>
-                        <td>${report.reportId}</td>
-                        <td>${report.content}</td>
-                        <td>${report.id}</td>
-                        <td>${report.writeDay}</td>
-                        <td>${report.location}</td>
-                    </tr>`;
+                data.forEach(function(report) {
+                    const imageUrl = report.imgPath 
+                        ? report.imgPath 
+                        : (report.images && report.images.length > 0 ? report.images[0].imgUrl : '');
+
+                    const row = `
+                        <tr onclick="location.href='/report/detail/${report.reportId}'" style="cursor: pointer;">
+                            <td>${report.reportId}</td>
+                            <td>${report.content}</td>
+                            <td>${report.id}</td>   
+                            <td>${report.writeDay}</td>
+                            <td>${report.location}</td>
+                            <td>${imageUrl ? `<img src="${imageUrl}" style="max-width: 100px; max-height: 100px;" />` : ''}</td>
+                        </tr>`;
                     tableBody.append(row);
                 });
             }
         },
-        error: function(error) {
+        error: function() {
             alert("검색 중 오류가 발생했습니다.");
         }
     });
+
 }
 </script>
+
+
 
 </body>
 </html>
