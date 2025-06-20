@@ -1,20 +1,21 @@
 package com.smhrd.ta.controller;
 
-import com.smhrd.ta.entity.NotionAnnouncement;
-import com.smhrd.ta.service.NotionService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import reactor.core.publisher.Mono;
-
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger; // 추가
 import org.slf4j.LoggerFactory; // 추가
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.smhrd.ta.entity.NotionAnnouncement;
+import com.smhrd.ta.service.NotionService;
+
+import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("/api/announcements")
@@ -24,7 +25,6 @@ public class NoticeController {
 
     private final NotionService notionService;
 
-    @Autowired
     public NoticeController(NotionService notionService) {
         this.notionService = notionService;
         log.info("NoticeController가 성공적으로 초기화되었습니다."); // 추가
