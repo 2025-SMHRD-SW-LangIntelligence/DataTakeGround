@@ -1,8 +1,5 @@
 package com.smhrd.ta.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,13 +19,9 @@ public class ReportImg {
     @Column(name = "ImgUrl")
     private String imgUrl;
 
-    @ManyToOne
-    @JoinColumn(name = "report_id")
-    @JsonIgnoreProperties("images") // 순환 참조 방지
-    @ToString.Exclude
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ReportID")  // FK: Report 테이블의 PK 참조
     private Report report;
-
-
 
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;

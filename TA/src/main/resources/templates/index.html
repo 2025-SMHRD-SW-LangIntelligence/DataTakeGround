@@ -340,7 +340,7 @@
 		.modal-data-title {
 			flex-shrink: 0;
 			text-align: left;
-			width : 30%;
+			width: 30%;
 		}
 
 		.modal-data-info {
@@ -352,7 +352,7 @@
 			display: inline-block;
 			word-wrap: break-word;
 			white-space: normal;
-			word-break : auto-phrase;
+			word-break: auto-phrase;
 		}
 
 		#si_info p {
@@ -529,7 +529,7 @@
 					<li onclick="location.href='/statistics'">데이터 통계</li>
 					<li onclick="location.href='/response'">대처방법</li>
 					<li onclick="location.href='/service'">서비스 설명</li>
-					<li onclick="location.href='/notice'">공지사항</li>
+					<li onclick="location.href='/api/announcements'">공지사항</li>
 
 				</ul>
 				<button class="login-btn" th:if="${userName != null}" onclick="location.href='/logout'">로그아웃</button>
@@ -564,7 +564,6 @@
 				<span onclick="user_location()"> <img src="img/target.png">
 				</span>
 			</div>
-
 			<!-- 모달 오버레이 -->
 			<div id="sinkholeModal" class="modal-overlay" style="display: none;">
 				<div class="modal_inner">
@@ -575,7 +574,6 @@
 					<div class="modal-container">
 						<div class="modal-content m1">
 							<div class="modal-body">
-
 								<h4>기본 정보</h4>
 								<p>
 									<span class="modal-data-title">
@@ -823,9 +821,6 @@
 			popup.style.display = 'none';
 		}
 
-		// 오버레이 전역 선언
-		let currentOverlay = null;
-
 		function fetchMarkersInBounds() {
 			const bounds = map.getBounds();
 			const sw = bounds.getSouthWest();
@@ -845,11 +840,11 @@
 						dth = parseFloat(d.sinkDepth)
 						if (dth >= 2.0) {
 							marker_color = "red"
-						}else if (1.5 <= dth && dth < 2.0){
+						} else if (1.5 <= dth && dth < 2.0) {
 							marker_color = "orange"
-						}else if (1.0 <= dth && dth < 1.5){
+						} else if (1.0 <= dth && dth < 1.5) {
 							marker_color = "yellow"
-						}else {
+						} else {
 							marker_color = "green"
 						}
 
@@ -931,105 +926,7 @@
 		// 최초 로딩 시 실행
 		fetchMarkersInBounds();
 
-		// 오버레이 닫기 함수
-		function overlayClose() {
-			if (currentOverlay) currentOverlay.setMap(null);
-		}
 
-		// 발생지역(마커) 상세보기)
-		function openSinkholeModal(data) {
-			const url = `/api/occur/bed?bedId=${data.bedId}`;
-			fetch(url)
-				.then(res => res.json())
-				.then(bed_data => {
-					overlayClose()
-					document.getElementById('modal-location').textContent = data.location;
-					document.getElementById('modal-date').textContent = data.sagoDate;
-					document.getElementById('modal-size').textContent = `${data.sinkWidth}m / ${data.sinkExtend}m / ${data.sinkDepth}m`;
-
-					document.getElementById('modal-bedType').textContent = bed_data[0].bedType
-					document.getElementById('modal-bedInfo').textContent = bed_data[0].bedInfo;
-
-					document.getElementById('modal-detail').textContent = data.sagoDetail;
-
-					const imageEl = document.getElementById('modal-image');
-					if (data.sagoImgUrl && data.sagoImgUrl !== 'nan') {
-						imageEl.src = data.sagoImgUrl;
-						imageEl.style.display = 'block';
-					} else {
-						imageEl.style.display = 'none';
-					}
-
-					document.getElementById('modal-death').textContent = data.deathCnt + "대";
-					document.getElementById('modal-injury').textContent = data.injuryCnt + "대";
-					document.getElementById('modal-vehicle').textContent = data.vehicleCnt + "대";
-					document.getElementById('modal-news').href = data.sagoNewsUrl;
-					document.getElementById('modal-news').textContent = data.sagoNewsUrl;
-
-					document.getElementById('modal-status').textContent = `${data.trStatus} (${data.trFnDate})`;
-					document.getElementById('modal-method').textContent = data.trMethod;
-
-					document.getElementById('sinkholeModal').style.display = 'flex';
-				})
-			document.getElementById('sinkholeModal').style.display = 'flex';
-
-			// 슬라이더 초기화
-			initModalSlider();
-		}
-
-		function closeSinkholeModal() {
-			document.getElementById('sinkholeModal').style.display = 'none';
-		}
-
-		// 모달 페이지 전환
-		let currentPage = 0; // 0: m1, 1: m2
-
-		function showModalPage(index) {
-			const pages = document.querySelectorAll(".modal-content");
-			const dots = document.querySelectorAll(".modal_slider_dot .dot");
-			const title = document.querySelectorAll("#sinkholeModal > div.modal_inner > div.modal-header > span:nth-child(1)");
-			title[0].innerText = "싱크홀 지도 상세 정보 (" + (index + 1) + " / 2)"
-
-			// 페이지 보여주기
-			pages.forEach((page, i) => {
-				page.style.display = (i === index) ? "block" : "none";
-			});
-
-			// Dot 표시 업데이트
-			dots.forEach((dot, i) => {
-				dot.classList.toggle("active", i === index);
-			});
-
-			currentPage = index;
-		}
-
-		// 이전 버튼
-		document.querySelector(".modal_slider_btn .prev").addEventListener("click", function (e) {
-			e.preventDefault();
-			const newIndex = (currentPage === 0) ? 1 : 0;
-			showModalPage(newIndex);
-		});
-
-		// 다음 버튼
-		document.querySelector(".modal_slider_btn .next").addEventListener("click", function (e) {
-			e.preventDefault();
-			const newIndex = (currentPage === 1) ? 0 : 1;
-			showModalPage(newIndex);
-		});
-
-		// 초기화 시 dot 생성 및 첫 페이지 표시
-		function initModalSlider() {
-			const dotContainer = document.querySelector(".modal_slider_dot");
-			dotContainer.innerHTML = ""; // 기존 제거
-			for (let i = 0; i < 2; i++) {
-				const dot = document.createElement("span");
-				dot.classList.add("dot");
-				if (i === 0) dot.classList.add("active");
-				dot.addEventListener("click", () => showModalPage(i));
-				dotContainer.appendChild(dot);
-			}
-			showModalPage(0);
-		}
 
 	</script>
 </body>
